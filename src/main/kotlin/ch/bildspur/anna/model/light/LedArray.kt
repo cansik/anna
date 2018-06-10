@@ -7,7 +7,7 @@ import ch.bildspur.anna.util.ColorMode
 import com.google.gson.annotations.Expose
 
 
-class LedArray(@IntParameter("Universe") @Expose val universe: DataModel<Int> = DataModel(0),
+class LedArray(@IntParameter("DmxUniverse") @Expose val universe: DataModel<Int> = DataModel(0),
                @IntParameter("Start") @Expose private val addressStart: DataModel<Int> = DataModel(0))
     : PostProcessable {
 

@@ -5,7 +5,7 @@ import ch.bildspur.anna.view.properties.IntParameter
 import com.google.gson.annotations.Expose
 import java.awt.Color
 
-class Universe(id: Int = 0) {
+class DmxUniverse(id: Int = 0) {
     companion object {
         @JvmStatic val MAX_LUMINANCE = 255
     }
@@ -81,6 +81,6 @@ class Universe(id: Int = 0) {
     }
 
     override fun toString(): String {
-        return "Universe (${id.value})"
+        return "DmxUniverse (${id.value})"
     }
 }
