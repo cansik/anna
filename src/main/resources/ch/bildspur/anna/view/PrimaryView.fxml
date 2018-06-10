@@ -1,0 +1,17 @@
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="1078.0"
+            xmlns="http://javafx.com/javafx/8.0.101"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ch.bildspur.anna.view.PrimaryView">
+    <top>
+    </top>
+    <left>
+    </left>
+    <bottom>
+    </bottom>
+    <center>
+    </center>
+    <right>
+    </right>
+</BorderPane>
