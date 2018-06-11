@@ -5,6 +5,11 @@ import ch.bildspur.anna.configuration.ConfigurationController
 import ch.bildspur.anna.model.AppConfig
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
+import ch.bildspur.anna.model.ann.Layer
+import ch.bildspur.anna.model.ann.Neuron
+import ch.bildspur.anna.model.ann.Weight
+import ch.bildspur.anna.model.light.Led
+import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.view.util.UITask
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -49,6 +54,10 @@ class PrimaryView {
             else
                 project.value = Project()
 
+            // create test project
+            // todo: remove this for real use case
+            project.value = createTestProject()
+
             // start processing
             startProcessing()
         }, { updateUI() }, "startup")
@@ -70,6 +79,48 @@ class PrimaryView {
     }
 
     fun updateUI() {
+    }
+
+    fun createTestProject() : Project
+    {
+        val project = Project()
+        project.name.value = "Hard Coded Project"
+
+        val ledsPerNode = 8
+        val structure =  arrayOf(3, 4, 3, 2)
+
+        // create structure
+        structure.forEach {
+            val layer = Layer()
+
+            // create nodes
+            (0 until it).forEach { i ->
+                val ledArray = LedArray(DataModel(i), DataModel(i * ledsPerNode * Led.LED_ADDRESS_SIZE))
+                ledArray.ledCount.value = 8
+
+                val neuron = Neuron(ledArray)
+                layer.neurons.add(neuron)
+            }
+
+            project.network.layers.add(layer)
+        }
+
+        // create default connections on first n leds
+        (0 until project.network.layers.size - 1).forEach {i ->
+            val l1 = project.network.layers[i]
+            val l2 = project.network.layers[i + 1]
+            val l3Size = if(project.network.layers.size > i + 2) project.network.layers[i + 2].neurons.size else 0
+
+            // add weights per neuron
+            l1.neurons.forEach {n1 ->
+                l2.neurons.forEachIndexed {ni, n2 ->
+                    val weight = Weight(n1, ni, n2, ni + l3Size)
+                    project.network.weights.add(weight)
+                }
+            }
+        }
+
+        return project
     }
 
     fun newProject(e: ActionEvent) {

@@ -1,6 +1,7 @@
 package ch.bildspur.anna.model
 
 import ch.bildspur.anna.Sketch
+import ch.bildspur.anna.model.ann.Network
 import ch.bildspur.anna.model.light.DmxNode
 import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.view.properties.BooleanParameter
@@ -51,6 +52,9 @@ class Project {
     @Expose
     @BooleanParameter("ArtNet Rendering")
     var isArtNetRendering = DataModel(true)
+
+    @Expose
+    var network = Network()
 
     @Expose
     var light = Light()

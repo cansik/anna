@@ -13,4 +13,14 @@ class Weight(@Expose val neuron1: Neuron,
 
     val led2: Led
         get() = neuron2.leds[ledIndex2]
+
+    fun isConnected(neuron : Neuron) : Boolean
+    {
+        return neuron1 == neuron || neuron2 == neuron
+    }
+
+    fun isConnected(led : Led) : Boolean
+    {
+        return led == led1 || led == led2
+    }
 }
