@@ -4,6 +4,7 @@ import ch.bildspur.anna.Sketch
 import ch.bildspur.anna.model.ann.Network
 import ch.bildspur.anna.model.light.DmxNode
 import ch.bildspur.anna.model.light.LedArray
+import ch.bildspur.anna.model.view.NetworkViewSettings
 import ch.bildspur.anna.view.properties.BooleanParameter
 import ch.bildspur.anna.view.properties.IntParameter
 import ch.bildspur.anna.view.properties.SliderParameter
@@ -55,6 +56,9 @@ class Project {
 
     @Expose
     var network = Network()
+
+    @Expose
+    var networkViewSettings = NetworkViewSettings()
 
     @Expose
     var light = Light()

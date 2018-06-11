@@ -31,9 +31,9 @@ class Sketch : PApplet() {
         val LOW_RES_FRAME_RATE = 30f
 
         @JvmStatic
-        val WINDOW_WIDTH = 768
+        val WINDOW_WIDTH = 1024
         @JvmStatic
-        val WINDOW_HEIGHT = 576
+        val WINDOW_HEIGHT = 768
 
         @JvmStatic
         val CURSOR_HIDING_TIME = 1000L * 5L
@@ -62,14 +62,10 @@ class Sketch : PApplet() {
 
     var fpsOverTime = 0f
 
-    var isStatusViewShown = false
-
     @Volatile
     var isResetRendererProposed = false
 
     var isRendering = DataModel(true)
-
-    var isInteractionOn = DataModel(true)
 
     val peasy = PeasyController(this)
 

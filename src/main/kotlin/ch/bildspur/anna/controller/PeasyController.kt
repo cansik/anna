@@ -12,10 +12,10 @@ class PeasyController(internal var sketch: PApplet) {
     lateinit var cam: PeasyCam
 
     fun setup() {
-        cam = PeasyCam(sketch, 0.0, 0.0, 0.0, 200.0)
+        cam = PeasyCam(sketch, 0.0, 0.0, 0.0, 500.0)
 
-        cam.setMinimumDistance(0.0)
-        cam.setMaximumDistance(500.0)
+        cam.setMinimumDistance(100.0)
+        cam.setMaximumDistance(1500.0)
 
         //cam.rotateZ(PApplet.radians(-90f).toDouble())
         cam.rotateX(PApplet.radians(-75f).toDouble())
