@@ -5,6 +5,16 @@ import ch.bildspur.anna.util.ColorMode
 import com.google.gson.annotations.Expose
 
 class NetworkViewSettings {
+    // render mode
+    @Expose
+    var renderNodes = DataModel(true)
+
+    @Expose
+    var renderLEDs = DataModel(true)
+
+    @Expose
+    var renderWeights = DataModel(true)
+
     // settings
     @Expose
     var layerSpace = DataModel(230f)
@@ -40,4 +50,11 @@ class NetworkViewSettings {
     // weights
     @Expose
     var weightStrokeWeight = DataModel(1f)
+
+    // led settings
+    @Expose
+    var ledSpace = DataModel(8f)
+
+    @Expose
+    var ledSize = DataModel(5f)
 }
