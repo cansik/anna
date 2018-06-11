@@ -8,6 +8,7 @@ import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.renderer.ArtNetRenderer
 import ch.bildspur.anna.renderer.IRenderer
+import ch.bildspur.anna.renderer.SceneRenderer
 import ch.bildspur.anna.scene.SceneManager
 import ch.bildspur.anna.util.LogBook
 import ch.bildspur.anna.util.draw
@@ -209,6 +210,7 @@ class Sketch : PApplet() {
         renderer.clear()
 
         // add renderer
+        renderer.add(SceneRenderer(project.value, canvas))
         renderer.add(ArtNetRenderer(project.value, artnet, project.value.nodes, project.value.tubes))
         renderer.add(SceneManager(project.value, project.value.tubes))
 

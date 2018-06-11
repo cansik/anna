@@ -6,12 +6,10 @@ import ch.bildspur.anna.model.light.LedArray
 import processing.core.PGraphics
 import processing.core.PShape
 
-class SceneRenderer(val g: PGraphics, val ledArrays: List<LedArray>, val project: Project) : IRenderer {
+class SceneRenderer(val project: Project, val g: PGraphics) : IRenderer {
     private val task = TimerTask(0, { render() }, "SceneRenderer")
     override val timerTask: TimerTask
         get() = task
-
-    lateinit var rodShape: PShape
 
 
     override fun setup() {
@@ -19,7 +17,8 @@ class SceneRenderer(val g: PGraphics, val ledArrays: List<LedArray>, val project
     }
 
     override fun render() {
-
+        g.fill(255)
+        g.box(100f)
     }
 
     override fun dispose() {
