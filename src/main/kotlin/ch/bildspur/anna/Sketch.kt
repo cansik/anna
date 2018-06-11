@@ -200,7 +200,7 @@ class Sketch : PApplet() {
     }
 
     fun resetRenderer() {
-        println("reseting renderer...")
+        println("resetting renderer...")
 
         renderer.forEach {
             timer.taskList.remove(it.timerTask)
