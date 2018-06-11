@@ -1,4 +1,4 @@
-group 'ch.bildspur.ledforest'
+group 'ch.bildspur.anna'
 version '1.0-SNAPSHOT'
 
 buildscript {

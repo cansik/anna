@@ -62,4 +62,6 @@ class LedArray(@IntParameter("DmxUniverse") @Expose val universe: DataModel<Int>
     override fun gsonPostProcess() {
         hookListener()
     }
+
+    operator fun get(ledIndex : Int) = leds[ledIndex]
 }
