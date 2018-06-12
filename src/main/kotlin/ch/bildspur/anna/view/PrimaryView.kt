@@ -114,9 +114,9 @@ class PrimaryView {
             val l3Size = if(project.network.layers.size > i + 2) project.network.layers[i + 2].neurons.size else 0
 
             // add weights per neuron
-            l1.neurons.forEach {n1 ->
-                l2.neurons.forEachIndexed {ni, n2 ->
-                    val weight = Weight(n1, ni, n2, ni + l3Size)
+            l1.neurons.forEachIndexed {li1, n1 ->
+                l2.neurons.forEachIndexed {li2, n2 ->
+                    val weight = Weight(n1, li2, n2, li1 + l3Size)
                     project.network.weights.add(weight)
                 }
             }
