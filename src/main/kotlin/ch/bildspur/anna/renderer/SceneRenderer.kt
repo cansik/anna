@@ -126,9 +126,6 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
             // render line from pc to pn
             g.noFill()
             g.strokeWeight(viewSettings.weightStrokeWeight.value)
-            g.stroke(255)
-
-            //g.line(led1Pos.x, led1Pos.y, led1Pos.z, led2Pos.x, led2Pos.y, led2Pos.z)
 
             g.beginShape()
             g.stroke(it.led1.color.color)
@@ -138,62 +135,6 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
             g.vertex(led2Pos.x, led2Pos.y, led2Pos.z)
             g.vertex(led2Pos.x, led2Pos.y, led2Pos.z)
             g.endShape()
-        }
-    }
-
-    private fun renderWeightsOld() {
-        // render weights
-        for (l in 0 until network.layers.size - 1) {
-            val layerSize = network.layers[l].neurons.size
-            val nextLayerSize = network.layers[l + 1].neurons.size
-
-            // render weights
-            for (n in 0 until layerSize) {
-                val pc = nodes[l][n]
-
-                for (i in 0 until nextLayerSize) {
-                    val pn = nodes[l + 1][i]
-
-                    // render line from pc to pn
-                    g.noFill()
-                    g.strokeWeight(viewSettings.weightStrokeWeight.value)
-                    g.stroke(255f)
-
-                    //g.line(pc.x, pc.y, pc.z, pn.x, pn.y, pn.z);
-
-                    // new string rendering
-                    for (p in 0 until viewSettings.pofPerPixel.value) {
-                        val c = PVector.lerp(pc, pn, 0.5f)
-                        val pm = PVector()
-
-                        // rotate c
-                        val theta = 360f / viewSettings.pofPerPixel.value * p
-
-                        // calculate new c position
-                        g.pushMatrix()
-                        g.translate(c.x, c.y, c.z)
-                        g.rotateY(radians(theta))
-                        g.translate(0f, 0f, viewSettings.pofSpiral.value)
-                        pm.x = g.modelX(0f, 0f, 0f)
-                        pm.y = g.modelY(0f, 0f, 0f)
-                        pm.z = g.modelZ(0f, 0f, 0f)
-                        g.popMatrix()
-
-                        val pmf = PVector.lerp(pc, pm, 0.5f)
-                        val pml = PVector.lerp(pm, pn, 0.5f)
-
-                        g.beginShape()
-                        g.vertex(pc.x, pc.y, pc.z)
-                        g.curveVertex(pc.x, pc.y, pc.z)
-                        g.curveVertex(pmf.x, pmf.y, pmf.z)
-                        g.curveVertex(pm.x, pm.y, pm.z)
-                        g.curveVertex(pml.x, pml.y, pml.z)
-                        g.curveVertex(pn.x, pn.y, pn.z)
-                        g.vertex(pn.x, pn.y, pn.z)
-                        g.endShape()
-                    }
-                }
-            }
         }
     }
 

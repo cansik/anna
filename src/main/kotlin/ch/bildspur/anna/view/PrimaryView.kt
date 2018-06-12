@@ -98,7 +98,7 @@ class PrimaryView {
                 val ledArray = LedArray(
                         universe = DataModel(i),
                         addressStart =  DataModel(i * ledsPerNode * Led.LED_ADDRESS_SIZE))
-                ledArray.ledCount.value = 8
+                ledArray.ledCount.value = ledsPerNode
 
                 val neuron = Neuron(ledArray)
                 layer.neurons.add(neuron)
