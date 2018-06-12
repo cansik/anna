@@ -8,9 +8,11 @@ import ch.bildspur.anna.model.light.DmxNode
 import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.model.light.DmxUniverse
 
-class ArtNetRenderer(val project: Project, val artnet: ArtNetClient, val nodes: List<DmxNode>, val ledArrays: List<LedArray>) : IRenderer {
+class ArtNetRenderer(val project: Project, val artnet: ArtNetClient) : IRenderer {
     lateinit var universesToNodes: Map<DmxUniverse, ArtNetNode>
     lateinit var indexToUniverses: Map<Int, DmxUniverse>
+
+    lateinit var ledArrays: List<LedArray>
 
     private val task = TimerTask(15, { render() }, "ArtNetRenderer")
     override val timerTask: TimerTask
@@ -18,6 +20,9 @@ class ArtNetRenderer(val project: Project, val artnet: ArtNetClient, val nodes: 
 
     override fun setup() {
         buildUniverseIndex()
+
+        // build led array index
+        ledArrays = project.network.layers.flatMap { it.neurons.map { it.leds }}
     }
 
     override fun render() {
@@ -36,7 +41,7 @@ class ArtNetRenderer(val project: Project, val artnet: ArtNetClient, val nodes: 
     }
 
     fun buildUniverseIndex() {
-        universesToNodes = nodes
+        universesToNodes = project.nodes
                 .flatMap { n -> n.universes.map { u -> Pair(u, n) } }
                 .associate { it.first to artnet.createNode(it.second.address.value)!! }
 

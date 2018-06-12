@@ -21,12 +21,6 @@ class Project {
     var name = DataModel("${Sketch.NAME} Project")
 
     @Expose
-    var nodes = CopyOnWriteArrayList<DmxNode>()
-
-    @Expose
-    var tubes = CopyOnWriteArrayList<LedArray>()
-
-    @Expose
     @BooleanParameter("High Res Mode*")
     var highResMode = DataModel(true)
 
@@ -53,6 +47,10 @@ class Project {
     @Expose
     @BooleanParameter("ArtNet Rendering")
     var isArtNetRendering = DataModel(true)
+
+
+    @Expose
+    var nodes = CopyOnWriteArrayList<DmxNode>()
 
     @Expose
     var network = Network()

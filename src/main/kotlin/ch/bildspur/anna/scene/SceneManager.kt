@@ -6,8 +6,8 @@ import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.renderer.IRenderer
 
-class SceneManager(val project: Project, val ledArrays: List<LedArray>) : IRenderer {
-    val blackScene = BlackScene(ledArrays)
+class SceneManager(val project: Project) : IRenderer {
+    val blackScene = BlackScene(project.network)
 
     var activeScene: BaseScene = blackScene
 

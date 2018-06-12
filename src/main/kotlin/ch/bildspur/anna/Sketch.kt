@@ -12,6 +12,7 @@ import ch.bildspur.anna.renderer.SceneRenderer
 import ch.bildspur.anna.scene.SceneManager
 import ch.bildspur.anna.util.LogBook
 import ch.bildspur.anna.util.draw
+import ch.bildspur.anna.util.forEachNode
 import ch.bildspur.anna.util.format
 import ch.bildspur.postfx.builder.PostFX
 import processing.core.PApplet
@@ -165,14 +166,20 @@ class Sketch : PApplet() {
         }
     }
 
-    fun onProjectChanged() {
+    fun proposeResetRenderer() {
+        if (isInitialised) {
+            isResetRendererProposed = true
+        }
+    }
+
+    private fun onProjectChanged() {
         surface.setTitle("$NAME ($VERSION) - ${project.value.name.value}")
 
         // setup hooks
         setupHooks()
     }
 
-    fun setupHooks() {
+    private fun setupHooks() {
         project.value.nodes.forEach {
             it.address.onChanged.clear()
             it.address.onChanged += {
@@ -181,21 +188,15 @@ class Sketch : PApplet() {
         }
     }
 
-    fun updateLEDColors() {
-        project.value.tubes.forEach { t ->
-            t.leds.forEach { l ->
-                l.color.update()
+    private fun updateLEDColors() {
+        project.value.network.forEachNode {
+            it.leds.leds.forEach {
+                it.color.update()
             }
         }
     }
 
-    fun proposeResetRenderer() {
-        if (isInitialised) {
-            isResetRendererProposed = true
-        }
-    }
-
-    fun resetRenderer() {
+    private fun resetRenderer() {
         println("resetting renderer...")
 
         renderer.forEach {
@@ -207,8 +208,8 @@ class Sketch : PApplet() {
 
         // add renderer
         renderer.add(SceneRenderer(project.value, canvas))
-        renderer.add(ArtNetRenderer(project.value, artnet, project.value.nodes, project.value.tubes))
-        renderer.add(SceneManager(project.value, project.value.tubes))
+        renderer.add(ArtNetRenderer(project.value, artnet))
+        renderer.add(SceneManager(project.value))
 
         isResetRendererProposed = false
 
@@ -220,7 +221,7 @@ class Sketch : PApplet() {
         }
     }
 
-    fun resetCanvas() {
+    private fun resetCanvas() {
         canvas = createGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, PConstants.P3D)
 
         // retina screen
@@ -228,7 +229,7 @@ class Sketch : PApplet() {
             canvas.pixelDensity = 2
     }
 
-    fun skipFirstFrames(): Boolean {
+    private fun skipFirstFrames(): Boolean {
         // skip first two frames
         if (frameCount < 2) {
             peasy.hud {
@@ -243,7 +244,7 @@ class Sketch : PApplet() {
         return false
     }
 
-    fun initControllers(): Boolean {
+    private fun initControllers(): Boolean {
         if (!isInitialised) {
             resetCanvas()
 
@@ -261,7 +262,7 @@ class Sketch : PApplet() {
         return false
     }
 
-    fun drawFPS(pg: PGraphics) {
+    private fun drawFPS(pg: PGraphics) {
         // draw fps
         fpsOverTime += frameRate
         val averageFPS = fpsOverTime / frameCount.toFloat()
@@ -272,7 +273,7 @@ class Sketch : PApplet() {
         pg.text("FPS: ${frameRate.format(2)}\nFOT: ${averageFPS.format(2)}", 10f, height - 5f)
     }
 
-    fun prepareExitHandler() {
+    private fun prepareExitHandler() {
         Runtime.getRuntime().addShutdownHook(Thread {
             println("shutting down...")
             renderer.forEach { it.dispose() }

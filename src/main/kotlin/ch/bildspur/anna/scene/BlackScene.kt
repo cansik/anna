@@ -1,11 +1,11 @@
 package ch.bildspur.anna.scene
 
 import ch.bildspur.anna.controller.timer.TimerTask
-import ch.bildspur.anna.model.light.LedArray
+import ch.bildspur.anna.model.ann.Network
 import ch.bildspur.anna.util.ColorMode
-import ch.bildspur.anna.util.forEachLED
+import ch.bildspur.anna.util.forEachNode
 
-class BlackScene(ledArrays: List<LedArray>) : BaseScene(ledArrays) {
+class BlackScene(network : Network) : BaseScene(network) {
     private val task = TimerTask(1000, { update() })
 
     override val name: String
@@ -16,8 +16,10 @@ class BlackScene(ledArrays: List<LedArray>) : BaseScene(ledArrays) {
 
     override fun setup() {
         // set all led's one black
-        ledArrays.forEachLED {
-            it.color.fade(ColorMode.color(0), 0.05f)
+        network.forEachNode {
+            it.leds.leds.forEach {
+                it.color.fade(ColorMode.color(0), 0.05f)
+            }
         }
     }
 

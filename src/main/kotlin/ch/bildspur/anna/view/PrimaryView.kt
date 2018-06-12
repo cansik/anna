@@ -8,6 +8,8 @@ import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.ann.Layer
 import ch.bildspur.anna.model.ann.Neuron
 import ch.bildspur.anna.model.ann.Weight
+import ch.bildspur.anna.model.light.DmxNode
+import ch.bildspur.anna.model.light.DmxUniverse
 import ch.bildspur.anna.model.light.Led
 import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.view.util.UITask
@@ -19,6 +21,7 @@ import javafx.stage.Stage
 import processing.core.PApplet
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.concurrent.thread
 
 
@@ -85,6 +88,14 @@ class PrimaryView {
     {
         val project = Project()
         project.name.value = "Hard Coded Project"
+
+        // add dmx structure
+        val node = DmxNode()
+        node.universes.add(DmxUniverse(0))
+        node.universes.add(DmxUniverse(1))
+        node.universes.add(DmxUniverse(2))
+        node.universes.add(DmxUniverse(3))
+        project.nodes.add(node)
 
         val ledsPerNode = 8
         val structure =  arrayOf(3, 4, 3, 2)
