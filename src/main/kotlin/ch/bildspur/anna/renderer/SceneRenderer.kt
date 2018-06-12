@@ -5,7 +5,6 @@ import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.ann.Neuron
 import processing.core.PGraphics
 import processing.core.PVector
-import processing.core.PApplet.radians
 
 
 class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
@@ -21,17 +20,17 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
     private var annWidth: Float = 0f
     private var annHeight: Float = 0f
 
-    private lateinit var nodes: MutableList<MutableList<PVector>>
-    private lateinit var indexByNodes : MutableMap<Neuron, Pair<Int, Int>>
+    private lateinit var neuronPositions: MutableList<MutableList<PVector>>
+    private lateinit var indexByNeurons : MutableMap<Neuron, Pair<Int, Int>>
 
     override fun setup() {
         // setup dimensions
         annWidth = layers.map { (it.neurons.size - 1) * viewSettings.neuronSpace.value }.max() ?: 0f
         annHeight = (network.layers.size - 1) * viewSettings.layerSpace.value
 
-        // setup nodes lookup tables
-        nodes = mutableListOf()
-        indexByNodes = HashMap()
+        // setup neuronPositions lookup tables
+        neuronPositions = mutableListOf()
+        indexByNeurons = HashMap()
 
         // init layer positions
         for (l in 0 until network.layers.size) {
@@ -39,9 +38,9 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
             val nodeSpace = viewSettings.layerSpace.value
             val mx = nodeSpace * (layerSize - 1)
 
-            // init nodes
+            // init neuronPositions
             val layerPositions = mutableListOf<PVector>()
-            nodes.add(layerPositions)
+            neuronPositions.add(layerPositions)
 
             // init node positions
             for (n in 0 until layerSize) {
@@ -51,7 +50,7 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
                 val z = viewSettings.zHeight.value
 
                 layerPositions.add(PVector(x, y, z))
-                indexByNodes[layers[l].neurons[n]] = Pair(l, n)
+                indexByNeurons[layers[l].neurons[n]] = Pair(l, n)
             }
         }
     }
@@ -73,7 +72,7 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
     private fun renderNodes() {
         layers.forEachIndexed { l, layer ->
             layer.neurons.forEachIndexed { n, _ ->
-                val p = nodes[l][n]
+                val p = neuronPositions[l][n]
 
                 g.pushMatrix()
                 g.translate(p.x, p.y, p.z)
@@ -93,13 +92,13 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
     private fun renderLEDs() {
         layers.forEachIndexed { l, layer ->
             layer.neurons.forEachIndexed { n, neuron ->
-                val p = nodes[l][n]
+                val p = neuronPositions[l][n]
 
                 g.pushMatrix()
                 g.translate(p.x, p.y, p.z)
 
                 // render led
-                neuron.leds.leds.forEachIndexed { i, led ->
+                neuron.ledArray.leds.forEachIndexed { i, led ->
                     g.pushMatrix()
 
                     // move to led position
@@ -148,16 +147,16 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
 
     private fun getLEDPositionYShift(neuron : Neuron, ledIndex : Int) : Float
     {
-        val maxLedLength = (neuron.leds.leds.size - 1) * viewSettings.ledSpace.value
+        val maxLedLength = (neuron.ledArray.leds.size - 1) * viewSettings.ledSpace.value
         return (ledIndex * viewSettings.ledSpace.value) - (maxLedLength / 2f)
     }
 
     private fun getNeuronPosition(neuron : Neuron) : PVector
     {
-        if(!indexByNodes.containsKey(neuron))
+        if(!indexByNeurons.containsKey(neuron))
             return PVector()
 
-        val indexes = indexByNodes[neuron]!!
-        return nodes[indexes.first][indexes.second]
+        val indexes = indexByNeurons[neuron]!!
+        return neuronPositions[indexes.first][indexes.second]
     }
 }

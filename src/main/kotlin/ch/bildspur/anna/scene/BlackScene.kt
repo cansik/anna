@@ -17,7 +17,7 @@ class BlackScene(network : Network) : BaseScene(network) {
     override fun setup() {
         // set all led's one black
         network.forEachNode {
-            it.leds.leds.forEach {
+            it.ledArray.leds.forEach {
                 it.color.fade(ColorMode.color(0), 0.05f)
             }
         }

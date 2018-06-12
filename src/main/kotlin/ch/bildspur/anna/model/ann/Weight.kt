@@ -9,10 +9,10 @@ class Weight(@Expose val neuron1: Neuron,
              @Expose val ledIndex2: Int) {
 
     val led1: Led
-        get() = neuron1.leds[ledIndex1]
+        get() = neuron1.ledArray[ledIndex1]
 
     val led2: Led
-        get() = neuron2.leds[ledIndex2]
+        get() = neuron2.ledArray[ledIndex2]
 
     fun isConnected(neuron : Neuron) : Boolean
     {

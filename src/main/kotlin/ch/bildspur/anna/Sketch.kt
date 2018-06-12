@@ -190,7 +190,7 @@ class Sketch : PApplet() {
 
     private fun updateLEDColors() {
         project.value.network.forEachNode {
-            it.leds.leds.forEach {
+            it.ledArray.leds.forEach {
                 it.color.update()
             }
         }

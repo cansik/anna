@@ -4,7 +4,6 @@ import artnet4j.ArtNetNode
 import ch.bildspur.anna.artnet.ArtNetClient
 import ch.bildspur.anna.controller.timer.TimerTask
 import ch.bildspur.anna.model.Project
-import ch.bildspur.anna.model.light.DmxNode
 import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.model.light.DmxUniverse
 
@@ -22,7 +21,7 @@ class ArtNetRenderer(val project: Project, val artnet: ArtNetClient) : IRenderer
         buildUniverseIndex()
 
         // build led array index
-        ledArrays = project.network.layers.flatMap { it.neurons.map { it.leds }}
+        ledArrays = project.network.layers.flatMap { it.neurons.map { it.ledArray }}
     }
 
     override fun render() {

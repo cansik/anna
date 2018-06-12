@@ -118,7 +118,7 @@ class PrimaryView {
             project.network.layers.add(layer)
         }
 
-        // create default connections on first n leds
+        // create default connections on first n ledArray
         (0 until project.network.layers.size - 1).forEach {i ->
             val l1 = project.network.layers[i]
             val l2 = project.network.layers[i + 1]
