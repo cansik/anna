@@ -126,7 +126,7 @@ class Sketch : PApplet() {
     }
 
     override fun draw() {
-        background(0)
+        background(5)
 
         if (skipFirstFrames())
             return
@@ -143,7 +143,7 @@ class Sketch : PApplet() {
         updateLEDColors()
 
         canvas.draw {
-            it.background(0)
+            it.background(5)
 
             // render (update timer)
             if (isRendering.value)

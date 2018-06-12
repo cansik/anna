@@ -126,9 +126,18 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
             // render line from pc to pn
             g.noFill()
             g.strokeWeight(viewSettings.weightStrokeWeight.value)
-            g.stroke(255f)
+            g.stroke(255)
 
-            g.line(led1Pos.x, led1Pos.y, led1Pos.z, led2Pos.x, led2Pos.y, led2Pos.z)
+            //g.line(led1Pos.x, led1Pos.y, led1Pos.z, led2Pos.x, led2Pos.y, led2Pos.z)
+
+            g.beginShape()
+            g.stroke(it.led1.color.color)
+            g.vertex(led1Pos.x, led1Pos.y, led1Pos.z)
+
+            g.stroke(it.led2.color.color)
+            g.vertex(led2Pos.x, led2Pos.y, led2Pos.z)
+            g.vertex(led2Pos.x, led2Pos.y, led2Pos.z)
+            g.endShape()
         }
     }
 

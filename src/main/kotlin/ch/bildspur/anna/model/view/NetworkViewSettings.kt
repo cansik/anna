@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose
 class NetworkViewSettings {
     // render mode
     @Expose
-    var renderNodes = DataModel(true)
+    var renderNodes = DataModel(false)
 
     @Expose
     var renderLEDs = DataModel(true)
