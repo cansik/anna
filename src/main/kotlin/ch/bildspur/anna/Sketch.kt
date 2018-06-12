@@ -19,6 +19,9 @@ import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.opengl.PJOGL
+import processing.opengl.PGraphicsOpenGL
+
+
 
 
 /**
@@ -104,7 +107,17 @@ class Sketch : PApplet() {
     override fun setup() {
         Sketch.instance = this
 
-        frameRate(if (project.value.highFPSMode.value) HIGH_RES_FRAME_RATE else LOW_RES_FRAME_RATE)
+        // vsync
+        if(project.value.vsyncMode.value) {
+            frameRate(1000f)
+
+            val pgl = beginPGL() as PJOGL
+            pgl.gl.swapInterval = 1
+            endPGL()
+        }
+        else
+            frameRate(if (project.value.highFPSMode.value) HIGH_RES_FRAME_RATE else LOW_RES_FRAME_RATE)
+
         colorMode(HSB, 360f, 100f, 100f)
 
         project.onChanged += {

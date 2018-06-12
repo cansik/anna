@@ -29,6 +29,11 @@ class Project {
     var highFPSMode = DataModel(true)
 
     @Expose
+    @BooleanParameter("Enable VSYNC*")
+    var vsyncMode = DataModel(true)
+
+
+    @Expose
     @BooleanParameter("High Detail Mode")
     var highDetail = DataModel(true)
 
