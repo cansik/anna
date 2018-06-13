@@ -130,8 +130,8 @@ class VideoInputScene(network : Network) : BaseScene(network) {
 
     override fun update() {
         weightToFixtureLookup.forEach { weight, fixture ->
-            weight.led1.color.fade(fixture.color, 0.5f)
-            weight.led2.color.fade(fixture.color, 0.5f)
+            weight.led1.color.fade(fixture.color, 1.0f)
+            weight.led2.color.fade(fixture.color, 1.0f)
         }
     }
 
