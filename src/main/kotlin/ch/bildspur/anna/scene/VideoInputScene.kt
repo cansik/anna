@@ -7,16 +7,14 @@ import ch.bildspur.anna.mapping.LineFixture
 import ch.bildspur.anna.mapping.PixelMapper
 import ch.bildspur.anna.model.ann.Network
 import ch.bildspur.anna.model.ann.Weight
+import ch.bildspur.anna.model.light.Led
 import ch.bildspur.anna.renderer.VisualisationRenderer
 import ch.bildspur.anna.util.translate
-import jogamp.opengl.awt.Java2D
-import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.core.PVector
 import kotlin.concurrent.thread
 import kotlin.concurrent.withLock
-import kotlin.math.roundToInt
 
 class VideoInputScene(network : Network) : BaseScene(network) {
     private val task = TimerTask(40, { update() })
@@ -34,7 +32,7 @@ class VideoInputScene(network : Network) : BaseScene(network) {
 
     val mapper = PixelMapper()
 
-    val weightToFixtureLookup : MutableMap<Weight, Fixture> = mutableMapOf()
+    val ledToFixtureLookup : MutableMap<Led, Fixture> = mutableMapOf()
 
     val padding = PVector(120f, 80f)
 
@@ -53,7 +51,6 @@ class VideoInputScene(network : Network) : BaseScene(network) {
                 // copy frame to buffer
                 syphon.frameLock.withLock {
                     buffer.beginDraw()
-                    buffer.background(0)
                     buffer.image(syphon.frame, 0f, 0f)
                     buffer.endDraw()
                 }
@@ -74,11 +71,16 @@ class VideoInputScene(network : Network) : BaseScene(network) {
         network.weights.forEach {
             val led1Pos = visualisation.getLEDPosition(it.neuron1, it.ledIndex1).translate(translation)
             val led2Pos = visualisation.getLEDPosition(it.neuron2, it.ledIndex2).translate(translation)
+            val center = PVector.lerp(led1Pos, led2Pos, 0.5f)
 
-            val fixture = LineFixture(led1Pos, led2Pos, thickness = 5)
+            val fixture1 = LineFixture(led1Pos, center, thickness = 5)
+            val fixture2 = LineFixture(center, led2Pos, thickness = 5)
 
-            mapper.fixtures.add(fixture)
-            weightToFixtureLookup[it] = fixture
+            mapper.fixtures.add(fixture1)
+            mapper.fixtures.add(fixture2)
+
+            ledToFixtureLookup[it.led1] = fixture1
+            ledToFixtureLookup[it.led2] = fixture2
         }
     }
 
@@ -100,7 +102,7 @@ class VideoInputScene(network : Network) : BaseScene(network) {
 
         map.stroke(0f, 255f, 0f, 230f)
 
-        weightToFixtureLookup.map { it.value }
+        ledToFixtureLookup.map { it.value }
                 .filterIsInstance<LineFixture>()
                 .forEach {fixture ->
                     fixture.subFixtures.forEach {
@@ -129,9 +131,8 @@ class VideoInputScene(network : Network) : BaseScene(network) {
     }
 
     override fun update() {
-        weightToFixtureLookup.forEach { weight, fixture ->
-            weight.led1.color.fade(fixture.color, 1.0f)
-            weight.led2.color.fade(fixture.color, 1.0f)
+        ledToFixtureLookup.forEach { led, fixture ->
+            led.color.fade(fixture.color, 1.0f)
         }
     }
 
