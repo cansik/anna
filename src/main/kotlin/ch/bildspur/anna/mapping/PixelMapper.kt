@@ -6,9 +6,6 @@ class PixelMapper(val fixtures : MutableList<Fixture> = mutableListOf()) {
 
     fun updateFixtures(image : PImage)
     {
-        if(!image.isLoaded)
-            image.loadPixels()
-
         fixtures.forEach { it.updateColor(image) }
     }
 }

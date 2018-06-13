@@ -13,6 +13,7 @@ import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PVector
 import kotlin.concurrent.thread
+import kotlin.concurrent.withLock
 import kotlin.math.roundToInt
 
 class VideoInputScene(network : Network) : BaseScene(network) {
@@ -40,7 +41,14 @@ class VideoInputScene(network : Network) : BaseScene(network) {
     private var pixelMappingThread = thread(false) {
         while (isRunning)
         {
-            mapper.updateFixtures(syphon.frame)
+            /*
+            if(syphon.frame.width > 0) {
+                val frame = syphon.frameLock.withLock {
+                    syphon.frame.copy()
+                }
+                mapper.updateFixtures(frame)
+            }
+            */
             Thread.sleep(task.interval / 2)
         }
     }
@@ -107,6 +115,8 @@ class VideoInputScene(network : Network) : BaseScene(network) {
     }
 
     override fun update() {
+        mapper.updateFixtures(syphon.frame)
+
         weightToFixtureLookup.forEach { weight, fixture ->
             weight.led1.color.fade(fixture.color, 0.5f)
             weight.led2.color.fade(fixture.color, 0.5f)
