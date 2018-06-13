@@ -9,8 +9,10 @@ import ch.bildspur.anna.model.ann.Network
 import ch.bildspur.anna.model.ann.Weight
 import ch.bildspur.anna.renderer.VisualisationRenderer
 import ch.bildspur.anna.util.translate
+import jogamp.opengl.awt.Java2D
 import processing.core.PApplet
 import processing.core.PConstants
+import processing.core.PGraphics
 import processing.core.PVector
 import kotlin.concurrent.thread
 import kotlin.concurrent.withLock
@@ -36,19 +38,31 @@ class VideoInputScene(network : Network) : BaseScene(network) {
 
     val padding = PVector(120f, 80f)
 
+    lateinit var buffer : PGraphics
+
     @Volatile var isRunning = false
 
     private var pixelMappingThread = thread(false) {
         while (isRunning)
         {
-            /*
             if(syphon.frame.width > 0) {
-                val frame = syphon.frameLock.withLock {
-                    syphon.frame.copy()
+                // lazy init buffer
+                if(!::buffer.isInitialized)
+                    buffer = Sketch.instance.createGraphics(syphon.frame.width, syphon.frame.height, PConstants.JAVA2D)
+
+                // copy frame to buffer
+                syphon.frameLock.withLock {
+                    buffer.beginDraw()
+                    buffer.background(0)
+                    buffer.image(syphon.frame, 0f, 0f)
+                    buffer.endDraw()
                 }
-                mapper.updateFixtures(frame)
+
+                // update fixtures
+                mapper.updateFixtures(buffer)
+                buffer.removeCache(syphon.frame)
             }
-            */
+
             Thread.sleep(task.interval / 2)
         }
     }
@@ -115,8 +129,6 @@ class VideoInputScene(network : Network) : BaseScene(network) {
     }
 
     override fun update() {
-        mapper.updateFixtures(syphon.frame)
-
         weightToFixtureLookup.forEach { weight, fixture ->
             weight.led1.color.fade(fixture.color, 0.5f)
             weight.led2.color.fade(fixture.color, 0.5f)

@@ -187,7 +187,8 @@ class Sketch : PApplet() {
             else
                 image(canvas, 0f, 0f)
 
-            image(syphon.frame, 50f, 50f, syphon.frame.width / 2f, syphon.frame.height / 2f)
+            // render syphon frame
+            //image(syphon.frame, 50f, 50f, syphon.frame.width / 2f, syphon.frame.height / 2f)
             drawFPS(g)
         }
     }
