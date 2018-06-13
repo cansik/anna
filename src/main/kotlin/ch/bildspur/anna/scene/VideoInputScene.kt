@@ -6,7 +6,6 @@ import ch.bildspur.anna.mapping.Fixture
 import ch.bildspur.anna.mapping.LineFixture
 import ch.bildspur.anna.mapping.PixelMapper
 import ch.bildspur.anna.model.ann.Network
-import ch.bildspur.anna.model.ann.Weight
 import ch.bildspur.anna.model.light.Led
 import ch.bildspur.anna.renderer.VisualisationRenderer
 import ch.bildspur.anna.util.translate
