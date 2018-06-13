@@ -10,7 +10,7 @@ class StarPatternScene(network: Network) : BaseScene(network) {
     private var randomOnFactor = 0.95f
     private var randomOffFactor = 0.8f
     private var fadeOffSpeed = 0.01f
-    private var fadeOnSpeed = 0.1f
+    private var fadeOnSpeed = 0.01f
 
     private val rnd = ExtendedRandom()
 

@@ -23,11 +23,17 @@ repositories {
 }
 
 dependencies {
+    // json support
     compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
     compile 'com.github.salomonbrys.kotson:kotson:2.5.0'
 
+    // kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    // test
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // postfx
     compile files('lib/postfx/PostFX.jar')
 
     // processing

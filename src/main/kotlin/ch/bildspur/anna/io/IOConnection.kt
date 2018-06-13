@@ -4,12 +4,26 @@ import processing.core.PApplet
 
 abstract class IOConnection(val parent : PApplet) {
 
+    @Volatile var isOpen = false
+
     abstract fun setup()
 
-    abstract fun open()
+    open fun open()
+    {
+        if(isOpen)
+            return
+
+        isOpen = true
+    }
 
     abstract fun update()
 
-    abstract fun close()
+    open fun close()
+    {
+        if(!isOpen)
+            return
+
+        isOpen = false
+    }
 
 }

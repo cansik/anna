@@ -6,9 +6,6 @@ import processing.core.PImage
 
 class SyphonInput(parent : PApplet) : IOConnection(parent) {
     lateinit var client : SyphonClient
-
-    @Volatile var isOpen = false
-
     lateinit var frame : PImage
 
     override fun setup() {
@@ -17,12 +14,7 @@ class SyphonInput(parent : PApplet) : IOConnection(parent) {
 
     override fun open()
     {
-        if(isOpen)
-            return
-
         client = SyphonClient(parent)
-
-        isOpen = true
     }
 
     override fun update()
@@ -34,12 +26,6 @@ class SyphonInput(parent : PApplet) : IOConnection(parent) {
 
     override fun close()
     {
-        if(!isOpen)
-            return
-
-        //frame = null
         client.stop()
-
-        isOpen = false
     }
 }
