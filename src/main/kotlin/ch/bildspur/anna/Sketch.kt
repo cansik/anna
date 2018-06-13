@@ -10,7 +10,7 @@ import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.renderer.ArtNetRenderer
 import ch.bildspur.anna.renderer.IRenderer
-import ch.bildspur.anna.renderer.SceneRenderer
+import ch.bildspur.anna.renderer.VisualisationRenderer
 import ch.bildspur.anna.scene.SceneManager
 import ch.bildspur.anna.util.LogBook
 import ch.bildspur.anna.util.draw
@@ -51,7 +51,7 @@ class Sketch : PApplet() {
         val VERSION = "0.1"
 
         @JvmStatic
-        lateinit var instance: PApplet
+        lateinit var instance: Sketch
 
         @JvmStatic
         fun map(value: Double, start1: Double, stop1: Double, start2: Double, stop2: Double): Double {
@@ -230,7 +230,7 @@ class Sketch : PApplet() {
         renderer.clear()
 
         // add renderer
-        renderer.add(SceneRenderer(project.value, canvas))
+        renderer.add(VisualisationRenderer(project.value, canvas))
         renderer.add(ArtNetRenderer(project.value, artnet))
         renderer.add(SceneManager(project.value))
 

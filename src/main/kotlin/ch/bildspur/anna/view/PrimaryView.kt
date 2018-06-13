@@ -87,7 +87,7 @@ class PrimaryView {
     fun createTestProject() : Project
     {
         val project = Project()
-        project.name.value = "Hard Coded Project"
+        project.name.value = "Chateau Project"
 
         // add dmx structure
         val node = DmxNode()

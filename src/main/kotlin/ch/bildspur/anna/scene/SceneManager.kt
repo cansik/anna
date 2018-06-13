@@ -5,7 +5,7 @@ import ch.bildspur.anna.controller.timer.TimerTask
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.renderer.IRenderer
 
-class SceneManager(val project: Project) : IRenderer {
+class SceneManager(project: Project) : IRenderer {
     val blackScene = BlackScene(project.network)
     val startPatternScene = StarPatternScene(project.network)
 
@@ -37,7 +37,7 @@ class SceneManager(val project: Project) : IRenderer {
         timer.taskList.remove(activeScene.timerTask)
 
         activeScene = scene
-        activeScene.setup()
+        activeScene.start()
         timer.addTask(activeScene.timerTask)
     }
 }

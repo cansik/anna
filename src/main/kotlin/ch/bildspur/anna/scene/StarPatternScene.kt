@@ -22,8 +22,10 @@ class StarPatternScene(network: Network) : BaseScene(network) {
     override val timerTask: TimerTask
         get() = task
 
-
     override fun setup() {
+    }
+
+    override fun start() {
         // set all led's one black
         network.forEachNode {
             it.ledArray.leds.forEach {

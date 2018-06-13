@@ -15,6 +15,9 @@ class BlackScene(network : Network) : BaseScene(network) {
         get() = task
 
     override fun setup() {
+    }
+
+    override fun start() {
         // set all led's one black
         network.forEachNode {
             it.ledArray.leds.forEach {

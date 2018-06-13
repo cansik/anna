@@ -7,8 +7,8 @@ import processing.core.PGraphics
 import processing.core.PVector
 
 
-class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
-    private val task = TimerTask(0, { render() }, "SceneRenderer")
+class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
+    private val task = TimerTask(0, { render() }, "VisualisationRenderer")
     override val timerTask: TimerTask
         get() = task
 
@@ -17,12 +17,12 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
     private val viewSettings = project.networkViewSettings
 
     // view variables
-    private var annWidth: Float = 0f
-    private var annHeight: Float = 0f
+    var annWidth: Float = 0f
+    var annHeight: Float = 0f
 
     // lookup tables
-    private lateinit var neuronPositions: MutableList<MutableList<PVector>>
-    private lateinit var indexByNeurons : MutableMap<Neuron, Pair<Int, Int>>
+    lateinit var neuronPositions: MutableList<MutableList<PVector>>
+    lateinit var indexByNeurons : MutableMap<Neuron, Pair<Int, Int>>
 
     override fun setup() {
         // setup dimensions

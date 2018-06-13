@@ -10,6 +10,7 @@ abstract class BaseScene(val network : Network) {
     abstract val timerTask: TimerTask
 
     abstract fun setup()
+    abstract fun start()
     abstract fun update()
     abstract fun stop()
     abstract fun dispose()
