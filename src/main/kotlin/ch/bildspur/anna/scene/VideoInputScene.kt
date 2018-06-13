@@ -10,6 +10,7 @@ import ch.bildspur.anna.model.ann.Weight
 import ch.bildspur.anna.renderer.VisualisationRenderer
 import ch.bildspur.anna.util.translate
 import processing.core.PApplet
+import processing.core.PConstants
 import processing.core.PVector
 import kotlin.concurrent.thread
 import kotlin.math.roundToInt
@@ -32,6 +33,8 @@ class VideoInputScene(network : Network) : BaseScene(network) {
 
     val weightToFixtureLookup : MutableMap<Weight, Fixture> = mutableMapOf()
 
+    val padding = PVector(120f, 80f)
+
     @Volatile var isRunning = false
 
     private var pixelMappingThread = thread(false) {
@@ -44,7 +47,7 @@ class VideoInputScene(network : Network) : BaseScene(network) {
 
     private fun createWeightFixtures()
     {
-        val translation = PVector(visualisation.annWidth / 2f, visualisation.annHeight / 2f)
+        val translation = PVector((visualisation.annWidth / 2f) + (padding.x / 2), (visualisation.annHeight / 2f) + + (padding.y / 2))
 
         network.weights.forEach {
             val led1Pos = visualisation.getLEDPosition(it.neuron1, it.ledIndex1).translate(translation)
@@ -59,12 +62,21 @@ class VideoInputScene(network : Network) : BaseScene(network) {
 
     private fun createMap()
     {
-        val map = Sketch.instance.createGraphics(visualisation.annWidth.toInt(), visualisation.annHeight.toInt(), PApplet.JAVA2D)
+        val map = Sketch.instance.createGraphics((visualisation.annWidth + padding.x).toInt(), (visualisation.annHeight + padding.y).toInt())
         map.beginDraw()
-        map.background(0)
-        map.noFill()
-        map.stroke(0f, 255f, 0f, 230f)
+        map.background(0f, 0f)
         map.strokeWeight(1f)
+
+        map.noFill()
+
+        map.pushMatrix()
+        map.stroke(0f, 255f, 0f, 230f)
+        map.translate(padding.x / 2, padding.y / 2)
+        map.rect(0f, 0f, visualisation.annWidth, visualisation.annHeight)
+        map.popMatrix()
+
+
+        map.stroke(0f, 255f, 0f, 230f)
 
         weightToFixtureLookup.map { it.value }
                 .filterIsInstance<LineFixture>()
@@ -79,6 +91,9 @@ class VideoInputScene(network : Network) : BaseScene(network) {
     }
 
     override fun setup() {
+        if(Sketch.instance.pixelDensity > 1)
+            throw Exception("Pixel density has to be 1 for syphon input!")
+
         createWeightFixtures()
         createMap()
 

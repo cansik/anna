@@ -26,7 +26,7 @@ class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
 
     override fun setup() {
         // setup dimensions
-        annWidth = layers.map { (it.neurons.size - 1) * viewSettings.neuronSpace.value }.max() ?: 0f
+        annWidth = (layers.map { (it.neurons.size - 1) * viewSettings.neuronSpace.value }.max() ?: 0f) * 2f
         annHeight = (network.layers.size - 1) * viewSettings.layerSpace.value
 
         // setup neuronPositions lookup tables
