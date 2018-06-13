@@ -20,6 +20,7 @@ class SceneRenderer(project: Project, val g: PGraphics) : IRenderer {
     private var annWidth: Float = 0f
     private var annHeight: Float = 0f
 
+    // lookup tables
     private lateinit var neuronPositions: MutableList<MutableList<PVector>>
     private lateinit var indexByNeurons : MutableMap<Neuron, Pair<Int, Int>>
 

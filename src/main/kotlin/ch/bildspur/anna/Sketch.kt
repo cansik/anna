@@ -19,9 +19,6 @@ import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.opengl.PJOGL
-import processing.opengl.PGraphicsOpenGL
-
-
 
 
 /**
