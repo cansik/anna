@@ -1,9 +1,11 @@
 package ch.bildspur.anna
 
-import ch.bildspur.anna.artnet.ArtNetClient
+import ch.bildspur.anna.io.ArtNetClient
 import ch.bildspur.anna.controller.PeasyController
 import ch.bildspur.anna.controller.timer.Timer
 import ch.bildspur.anna.controller.timer.TimerTask
+import ch.bildspur.anna.io.IOConnection
+import ch.bildspur.anna.io.SyphonInput
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.renderer.ArtNetRenderer
@@ -74,11 +76,15 @@ class Sketch : PApplet() {
 
     val artnet = ArtNetClient()
 
+    val syphon = SyphonInput(this)
+
     lateinit var canvas: PGraphics
 
     var lastCursorMoveTime = 0
 
     val renderer = mutableListOf<IRenderer>()
+
+    val connections = listOf<IOConnection>(syphon)
 
     val project = DataModel(Project())
 
@@ -126,6 +132,10 @@ class Sketch : PApplet() {
         peasy.setup()
         artnet.open()
 
+
+        // setup connections
+        connections.forEach { it.setup() }
+
         // timer for cursor hiding
         timer.addTask(TimerTask(CURSOR_HIDING_TIME, {
             val current = millis()
@@ -152,6 +162,9 @@ class Sketch : PApplet() {
 
         // update ledArrays
         updateLEDColors()
+
+        // update connections
+        connections.forEach { it.update() }
 
         canvas.draw {
             it.background(5)
@@ -265,6 +278,9 @@ class Sketch : PApplet() {
             // setting up renderer
             resetRenderer()
 
+            // open connections
+            connections.forEach { it.open() }
+
             isInitialised = true
             return true
         }
@@ -287,9 +303,16 @@ class Sketch : PApplet() {
         Runtime.getRuntime().addShutdownHook(Thread {
             println("shutting down...")
             renderer.forEach { it.dispose() }
+
+            println("closing artnet...")
             artnet.close()
 
+            // open connections
+            println("closing connections...")
+            connections.forEach { it.close() }
+
             LogBook.log("Stop")
+            println("done!")
         })
     }
 

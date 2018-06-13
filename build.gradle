@@ -16,7 +16,7 @@ apply plugin: 'kotlin'
 
 apply plugin: 'application'
 mainClassName = "ch.bildspur.anna.Main"
-applicationDefaultJvmArgs = ["-Djava.library.path="]
+applicationDefaultJvmArgs = ["-Djava.library.path=lib/syphon"]
 
 repositories {
     mavenCentral()
@@ -35,13 +35,20 @@ dependencies {
     compile group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
     compile group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
 
+    // artnet
     compile files('lib/artnet/artnet4j.jar')
 
-    compile files('lib/plugins/jmdns/jmdns-3.5.1.jar')
-    compile files('lib/plugins/jmdns/slf4j-api-1.7.21.jar')
-    compile files('lib/plugins/jmdns/slf4j-simple-1.7.21.jar')
+    // jmdns
+    compile files('lib/jmdns/jmdns-3.5.1.jar')
+    compile files('lib/jmdns/slf4j-api-1.7.21.jar')
+    compile files('lib/jmdns/slf4j-simple-1.7.21.jar')
 
-    compile files('lib/plugins/peasycam/peasycam.jar')
+    // peasycam
+    compile files('lib/peasycam/peasycam.jar')
+
+    // syphon
+    compile files('lib/syphon/Syphon.jar')
+    compile files('lib/syphon/jsyphon.jar')
 }
 
 task fatJar(type: Jar) {

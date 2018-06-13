@@ -1,4 +1,4 @@
-package ch.bildspur.anna.artnet
+package ch.bildspur.anna.io
 
 import artnet4j.ArtNet
 import artnet4j.ArtNetException

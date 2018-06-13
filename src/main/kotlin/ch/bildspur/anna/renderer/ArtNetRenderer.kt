@@ -1,7 +1,7 @@
 package ch.bildspur.anna.renderer
 
 import artnet4j.ArtNetNode
-import ch.bildspur.anna.artnet.ArtNetClient
+import ch.bildspur.anna.io.ArtNetClient
 import ch.bildspur.anna.controller.timer.TimerTask
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.light.LedArray
