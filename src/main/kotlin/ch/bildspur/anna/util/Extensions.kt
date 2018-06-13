@@ -134,3 +134,15 @@ fun PGraphics.imageRect(image: PImage, x: Float, y: Float, width: Float, height:
 fun <T> Sequence<T>.batch(n: Int): Sequence<List<T>> {
     return BatchingSequence(this, n)
 }
+
+fun PGraphics.model() : PVector
+{
+    return PVector(modelX(0f, 0f, 0f),
+            modelY(0f, 0f, 0f),
+            modelZ(0f, 0f, 0f))
+}
+
+fun PVector.translate(v : PVector) : PVector
+{
+    return PVector.add(this, v)
+}

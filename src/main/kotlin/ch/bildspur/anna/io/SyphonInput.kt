@@ -4,28 +4,30 @@ import processing.core.PApplet
 import codeanticode.syphon.SyphonClient
 import processing.core.PImage
 
-class SyphonInput(parent : PApplet) : IOConnection(parent) {
-    lateinit var client : SyphonClient
-    lateinit var frame : PImage
+class SyphonInput(parent: PApplet) : IOConnection(parent) {
+    lateinit var client: SyphonClient
+
+    val frame: PImage
+        get() = if (buffer != null) buffer!! else blackFrame
+
+    private var buffer: PImage? = null
+    private lateinit var blackFrame: PImage
 
     override fun setup() {
-       frame = parent.createImage(0, 0, PApplet.RGB)
+        blackFrame = parent.createImage(0, 0, PApplet.RGB)
     }
 
-    override fun open()
-    {
+    override fun open() {
         client = SyphonClient(parent)
     }
 
-    override fun update()
-    {
+    override fun update() {
         if (client.newFrame()) {
-            frame = client.getImage(frame, false)
+            buffer = client.getImage(buffer)
         }
     }
 
-    override fun close()
-    {
+    override fun close() {
         client.stop()
     }
 }

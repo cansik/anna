@@ -8,8 +8,9 @@ import ch.bildspur.anna.renderer.IRenderer
 class SceneManager(project: Project) : IRenderer {
     val blackScene = BlackScene(project.network)
     val startPatternScene = StarPatternScene(project.network)
+    val videoInputScene = VideoInputScene(project.network)
 
-    val scenes = listOf(blackScene, startPatternScene)
+    val scenes = listOf(blackScene, startPatternScene, videoInputScene)
     var activeScene: BaseScene = blackScene
 
     private val task = TimerTask(0, { render() }, "SceneManager")
@@ -21,7 +22,9 @@ class SceneManager(project: Project) : IRenderer {
 
     override fun setup() {
         timer.setup()
-        switchScene(startPatternScene)
+        scenes.forEach { it.setup() }
+
+        switchScene(videoInputScene)
     }
 
     override fun render() {

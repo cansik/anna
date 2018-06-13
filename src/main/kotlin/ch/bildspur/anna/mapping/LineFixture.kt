@@ -7,7 +7,7 @@ import processing.core.PVector
 
 class LineFixture(val p1 : PVector, val p2 : PVector, val thickness : Int = 20) : Fixture() {
 
-    private val subFixtures = mutableListOf<Fixture>()
+    val subFixtures = mutableListOf<RectangleFixture>()
 
     init {
         setupSubFixtures()

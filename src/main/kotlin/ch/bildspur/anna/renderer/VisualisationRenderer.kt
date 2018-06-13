@@ -138,7 +138,7 @@ class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
         }
     }
 
-    private fun getLEDPosition(neuron : Neuron, ledIndex : Int) : PVector
+    fun getLEDPosition(neuron : Neuron, ledIndex : Int) : PVector
     {
         val position = getNeuronPosition(neuron)
         val shift = getLEDPositionYShift(neuron, ledIndex)
