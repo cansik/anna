@@ -1,13 +1,13 @@
 package ch.bildspur.anna.renderer
 
-import artnet4j.ArtNetNode
-import ch.bildspur.anna.io.ArtNetClient
+import ch.bildspur.anna.io.ArtNetConnection
 import ch.bildspur.anna.controller.timer.TimerTask
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.model.light.DmxUniverse
+import ch.bildspur.artnet.ArtNetNode
 
-class ArtNetRenderer(val project: Project, val artnet: ArtNetClient) : IRenderer {
+class ArtNetRenderer(val project: Project, val artnet: ArtNetConnection) : IRenderer {
     lateinit var universesToNodes: Map<DmxUniverse, ArtNetNode>
     lateinit var indexToUniverses: Map<Int, DmxUniverse>
 

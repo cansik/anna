@@ -1,11 +1,10 @@
 package ch.bildspur.anna
 
-import ch.bildspur.anna.io.ArtNetClient
+import ch.bildspur.anna.io.ArtNetConnection
 import ch.bildspur.anna.controller.PeasyController
 import ch.bildspur.anna.controller.timer.Timer
 import ch.bildspur.anna.controller.timer.TimerTask
 import ch.bildspur.anna.io.IOConnection
-import ch.bildspur.anna.io.JavaSyphonInput
 import ch.bildspur.anna.io.SyphonInput
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
@@ -75,7 +74,7 @@ class Sketch : PApplet() {
 
     val timer = Timer()
 
-    val artnet = ArtNetClient()
+    val artnet = ArtNetConnection()
 
     val syphon = SyphonInput(this)
 

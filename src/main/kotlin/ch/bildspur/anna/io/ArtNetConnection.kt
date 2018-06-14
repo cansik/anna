@@ -1,12 +1,12 @@
 package ch.bildspur.anna.io
 
-import artnet4j.ArtNet
-import artnet4j.ArtNetException
-import artnet4j.ArtNetNode
-import artnet4j.packets.ArtDmxPacket
+import ch.bildspur.artnet.ArtNet
+import ch.bildspur.artnet.ArtNetException
+import ch.bildspur.artnet.ArtNetNode
+import ch.bildspur.artnet.packets.ArtDmxPacket
 import java.net.InetAddress
 
-class ArtNetClient {
+class ArtNetConnection {
     private var sequenceId: Int = 0
     private var artnet = ArtNet()
     private var receiver: ArtNetNode? = null
