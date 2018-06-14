@@ -28,7 +28,7 @@ class StarPatternScene(project : Project) : BaseScene(project) {
         network.forEachNode {
             it.ledArray.leds.forEach {
                 it.color.fadeH(200f, 0.05f)
-                it.color.fadeS(100f, 0.05f)
+                it.color.fadeS(80f, 0.05f)
                 it.color.fadeB(100f, 0.05f)
             }
         }

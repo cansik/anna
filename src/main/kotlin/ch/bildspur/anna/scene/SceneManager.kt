@@ -9,8 +9,9 @@ class SceneManager(project: Project) : IRenderer {
     val blackScene = BlackScene(project)
     val startPatternScene = StarPatternScene(project)
     val videoInputScene = VideoInputScene(project)
+    val neuralFlowScene = NeuralFlowScene(project)
 
-    val scenes = listOf(blackScene, startPatternScene, videoInputScene)
+    val scenes = listOf(blackScene, startPatternScene, videoInputScene, neuralFlowScene)
     var activeScene: BaseScene = blackScene
 
     private val task = TimerTask(0, { render() }, "SceneManager")
