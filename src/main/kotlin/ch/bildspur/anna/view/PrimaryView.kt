@@ -13,6 +13,7 @@ import ch.bildspur.anna.model.light.DmxUniverse
 import ch.bildspur.anna.model.light.Led
 import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.view.util.UITask
+import javafx.application.Platform
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.layout.BorderPane
@@ -23,6 +24,10 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.concurrent.thread
+import com.jogamp.newt.opengl.util.NEWTDemoListener.setTitle
+import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.Alert
+import kotlin.system.exitProcess
 
 
 class PrimaryView {
@@ -136,7 +141,20 @@ class PrimaryView {
         return project
     }
 
-    fun newProject(e: ActionEvent) {
+    fun resetRenderer() {
+        sketch.proposeResetRenderer()
+    }
+
+    fun rebuildRenderer() {
+        sketch.renderer.forEach { it.setup() }
+    }
+
+    fun onClose(e: ActionEvent) {
+        sketch.exit()
+        exitProcess(0)
+    }
+
+    fun onNewProject(e: ActionEvent) {
         // reset current project
         UITask.run({
             appConfig.projectFile = ""
@@ -146,7 +164,7 @@ class PrimaryView {
         }, { updateUI() }, "new project")
     }
 
-    fun loadProject(e: ActionEvent) {
+    fun onOpenProject(e: ActionEvent) {
         val fileChooser = FileChooser()
         fileChooser.title = "Select project to load"
         fileChooser.initialFileName = ""
@@ -163,19 +181,11 @@ class PrimaryView {
                 configuration.saveAppConfig(appConfig)
 
                 resetRenderer()
-            }, { updateUI() }, "load project")
+            }, { updateUI() }, "open project")
         }
     }
 
-    fun resetRenderer() {
-        sketch.proposeResetRenderer()
-    }
-
-    fun rebuildRenderer() {
-        sketch.renderer.forEach { it.setup() }
-    }
-
-    fun saveProjectAs(e: ActionEvent) {
+    fun onSaveProjectAs(e: ActionEvent) {
         val fileChooser = FileChooser()
         fileChooser.initialFileName = ""
         fileChooser.title = "Save project..."
@@ -192,12 +202,22 @@ class PrimaryView {
         }
     }
 
-    fun saveProject(e: ActionEvent) {
+    fun onSaveProject(e: ActionEvent) {
         if (Files.exists(Paths.get(appConfig.projectFile)) && !Files.isDirectory(Paths.get(appConfig.projectFile))) {
             UITask.run({
                 configuration.saveProject(appConfig.projectFile, project.value)
                 configuration.saveAppConfig(appConfig)
             }, { updateUI() }, "save project")
         }
+    }
+
+    fun onShowAbout(e : ActionEvent)
+    {
+        val alert = Alert(AlertType.INFORMATION)
+        alert.title = "About"
+        alert.headerText = "${Sketch.NAME} - ${Sketch.VERSION}"
+        alert.contentText = "Developed by Florian Bruggisser 2018.\nwww.bildspur.ch\n\nURI: ${Sketch.URI_NAME}"
+
+        alert.showAndWait()
     }
 }
