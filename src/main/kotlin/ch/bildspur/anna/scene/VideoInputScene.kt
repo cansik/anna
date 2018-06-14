@@ -5,7 +5,7 @@ import ch.bildspur.anna.controller.timer.TimerTask
 import ch.bildspur.anna.mapping.Fixture
 import ch.bildspur.anna.mapping.LineFixture
 import ch.bildspur.anna.mapping.PixelMapper
-import ch.bildspur.anna.model.ann.Network
+import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.light.Led
 import ch.bildspur.anna.renderer.VisualisationRenderer
 import ch.bildspur.anna.util.translate
@@ -15,11 +15,11 @@ import processing.core.PVector
 import kotlin.concurrent.thread
 import kotlin.concurrent.withLock
 
-class VideoInputScene(network : Network) : BaseScene(network) {
+class VideoInputScene(project : Project) : BaseScene(project) {
     private val task = TimerTask(40, { update() })
 
     override val name: String
-        get() = "Video Input Scene"
+        get() = "Video Input"
 
     override val timerTask: TimerTask
         get() = task
@@ -37,12 +37,12 @@ class VideoInputScene(network : Network) : BaseScene(network) {
 
     lateinit var buffer : PGraphics
 
-    @Volatile var isRunning = false
+    @Volatile var isPixelMappingThreadRunning = false
 
     private var pixelMappingThread = thread(false) {
-        while (isRunning)
+        while (isPixelMappingThreadRunning)
         {
-            if(syphon.frame.width > 0) {
+            if(isRunning && syphon.frame.width > 0) {
                 // lazy init buffer
                 if(!::buffer.isInitialized)
                     buffer = Sketch.instance.createGraphics(syphon.frame.width, syphon.frame.height, PConstants.JAVA2D)
@@ -121,12 +121,10 @@ class VideoInputScene(network : Network) : BaseScene(network) {
         createMap()
 
         // start mapping thread
-        isRunning = true
+        isPixelMappingThreadRunning = true
         pixelMappingThread.start()
-    }
 
-    override fun start() {
-
+        super.setup()
     }
 
     override fun update() {
@@ -135,14 +133,11 @@ class VideoInputScene(network : Network) : BaseScene(network) {
         }
     }
 
-    override fun stop() {
-
-    }
-
     override fun dispose() {
-        if(isRunning) {
-            isRunning = false
+        if(isPixelMappingThreadRunning) {
+            isPixelMappingThreadRunning = false
             pixelMappingThread.join()
         }
+        super.dispose()
     }
 }

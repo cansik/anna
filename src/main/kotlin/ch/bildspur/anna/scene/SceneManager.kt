@@ -6,9 +6,9 @@ import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.renderer.IRenderer
 
 class SceneManager(project: Project) : IRenderer {
-    val blackScene = BlackScene(project.network)
-    val startPatternScene = StarPatternScene(project.network)
-    val videoInputScene = VideoInputScene(project.network)
+    val blackScene = BlackScene(project)
+    val startPatternScene = StarPatternScene(project)
+    val videoInputScene = VideoInputScene(project)
 
     val scenes = listOf(blackScene, startPatternScene, videoInputScene)
     var activeScene: BaseScene = blackScene
