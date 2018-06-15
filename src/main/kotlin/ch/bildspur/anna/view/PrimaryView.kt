@@ -12,6 +12,7 @@ import ch.bildspur.anna.model.light.DmxNode
 import ch.bildspur.anna.model.light.DmxUniverse
 import ch.bildspur.anna.model.light.Led
 import ch.bildspur.anna.model.light.LedArray
+import ch.bildspur.anna.scene.SceneManager
 import ch.bildspur.anna.view.properties.PropertiesControl
 import ch.bildspur.anna.view.util.UITask
 import javafx.event.ActionEvent
@@ -267,5 +268,29 @@ class PrimaryView {
 
     fun onShowVisualisationSetting(actionEvent: ActionEvent) {
         initSettingsView(project.value.networkViewSettings, "Visualisation")
+    }
+
+    fun onResetRenderer(actionEvent: ActionEvent) {
+        resetRenderer()
+    }
+
+    fun onExportMappingMask(actionEvent: ActionEvent) {
+        val fileChooser = FileChooser()
+        fileChooser.initialFileName = "map.png"
+        fileChooser.title = "Save map..."
+        fileChooser.extensionFilters.addAll(FileChooser.ExtensionFilter("PNG", "*.png"))
+
+        val result = fileChooser.showSaveDialog(primaryStage)
+
+        if (result != null) {
+            UITask.run({
+                val sceneManager = sketch.renderer.filterIsInstance<SceneManager>().first()
+                sceneManager.videoInputScene.createMap().save(result.path)
+            }, { updateUI() }, "save mapping mask")
+        }
+    }
+
+    fun onExportConnections(actionEvent: ActionEvent) {
+        println("not implemented!")
     }
 }

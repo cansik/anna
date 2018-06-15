@@ -11,6 +11,7 @@ import ch.bildspur.anna.renderer.VisualisationRenderer
 import ch.bildspur.anna.util.translate
 import processing.core.PConstants
 import processing.core.PGraphics
+import processing.core.PImage
 import processing.core.PVector
 import kotlin.concurrent.thread
 import kotlin.concurrent.withLock
@@ -83,10 +84,10 @@ class VideoInputScene(project : Project) : BaseScene(project) {
         }
     }
 
-    private fun createMap()
+    fun createMap() : PImage
     {
         if(visualisation.annWidth < 0f || visualisation.annHeight < 0f)
-            return
+            return PImage()
 
         val map = Sketch.instance.createGraphics((visualisation.annWidth + padding.x).toInt(), (visualisation.annHeight + padding.y).toInt())
         map.beginDraw()
@@ -113,7 +114,8 @@ class VideoInputScene(project : Project) : BaseScene(project) {
         }
 
         map.endDraw()
-        map.save("data/fixture_map.png")
+
+        return map
     }
 
     override fun setup() {
@@ -121,7 +123,6 @@ class VideoInputScene(project : Project) : BaseScene(project) {
             throw Exception("Pixel density has to be 1 for syphon input!")
 
         createWeightFixtures()
-        createMap()
 
         // start mapping thread
         isPixelMappingThreadRunning = true

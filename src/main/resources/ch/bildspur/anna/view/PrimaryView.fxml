@@ -43,10 +43,15 @@
                   </Menu>
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Renderer">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#onResetRenderer" text="Reset" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Export">
               <items>
-                <MenuItem mnemonicParsing="false" text="Mapping Mask" />
-                  <MenuItem mnemonicParsing="false" text="Connections" />
+                <MenuItem mnemonicParsing="false" onAction="#onExportMappingMask" text="Mapping Mask" />
+                  <MenuItem mnemonicParsing="false" onAction="#onExportConnections" text="Connections" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -58,9 +63,9 @@
       </MenuBar>
    </top>
    <right>
-      <ScrollPane prefHeight="200.0" prefWidth="310.0" BorderPane.alignment="CENTER">
+      <ScrollPane prefHeight="200.0" prefWidth="330.0" BorderPane.alignment="CENTER">
          <content>
-            <TitledPane fx:id="propertiesPane" animated="false" collapsible="false" prefWidth="310.0" text="Properties" />
+            <TitledPane fx:id="propertiesPane" animated="false" collapsible="false" prefWidth="320.0" text="Properties" />
          </content>
       </ScrollPane>
    </right>
