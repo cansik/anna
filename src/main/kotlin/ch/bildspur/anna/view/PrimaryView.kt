@@ -128,6 +128,9 @@ class PrimaryView {
         led2Column.cellFactory { it.ledIndex2.value }
         weightTableView.columns.add(led2Column)
 
+        // set column
+        weightTableView.columns.forEach { it.style = "-fx-alignment: CENTER;" }
+
         // setup items
         weightModels.clear()
         weightModels.addAll(project.value.network.weights)
@@ -188,6 +191,8 @@ class PrimaryView {
     }
 
     fun updateUI() {
+        weightModels.clear()
+        weightModels.addAll(project.value.network.weights)
     }
 
     fun createTestProject() : Project

@@ -40,11 +40,6 @@ class Project {
     @Expose
     @IntParameter("Fullscreen Display*")
     var fullScreenDisplay = DataModel(0)
-
-    @Expose
-    @BooleanParameter("ArtNet Rendering")
-    var isArtNetRendering = DataModel(true)
-
     @Expose
     var nodes = CopyOnWriteArrayList<DmxNode>()
 

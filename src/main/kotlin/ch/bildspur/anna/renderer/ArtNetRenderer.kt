@@ -26,7 +26,7 @@ class ArtNetRenderer(val project: Project, val artnet: ArtNetConnection) : IRend
 
     override fun render() {
         // check if artnet rendering is used
-        if (!project.isArtNetRendering.value)
+        if (!project.light.isArtNetRendering.value)
             return
 
         ledArrays.groupBy { it.universe.value }.forEach {
