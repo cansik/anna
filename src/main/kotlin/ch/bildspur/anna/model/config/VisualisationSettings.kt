@@ -21,6 +21,10 @@ class VisualisationSettings {
     @Expose
     var renderWeights = DataModel(true)
 
+    @BooleanParameter("Render Information")
+    @Expose
+    var renderInformation = DataModel(false)
+
     // settings
     @FloatParameter("Layer Space")
     @Expose
@@ -76,4 +80,33 @@ class VisualisationSettings {
     @FloatParameter("Led Size")
     @Expose
     var ledSize = DataModel(5f)
+
+    // information
+    @FloatParameter("Text Z-Height")
+    @Expose
+    var textZHeight = DataModel(3f)
+
+    @FloatParameter("Layer Text Size")
+    @Expose
+    var layerTextSize = DataModel(20f)
+
+    @FloatParameter("Layer Text Shift")
+    @Expose
+    var layerTextShift = DataModel(-200f)
+
+    @FloatParameter("Neuron Text Size")
+    @Expose
+    var neuronTextSize = DataModel(16f)
+
+    @FloatParameter("Neuron Text Shift")
+    @Expose
+    var neuronTextShift = DataModel(50f)
+
+    @FloatParameter("LED Text Size")
+    @Expose
+    var ledTextSize = DataModel(10f)
+
+    @FloatParameter("LED Text Shift")
+    @Expose
+    var ledTextShift = DataModel(20f)
 }

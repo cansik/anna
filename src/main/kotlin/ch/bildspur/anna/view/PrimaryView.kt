@@ -2,12 +2,12 @@ package ch.bildspur.anna.view
 
 import ch.bildspur.anna.Sketch
 import ch.bildspur.anna.configuration.ConfigurationController
-import ch.bildspur.anna.model.config.AppConfig
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.ann.Layer
 import ch.bildspur.anna.model.ann.Neuron
 import ch.bildspur.anna.model.ann.Weight
+import ch.bildspur.anna.model.config.AppConfig
 import ch.bildspur.anna.model.light.DmxNode
 import ch.bildspur.anna.model.light.DmxUniverse
 import ch.bildspur.anna.model.light.Led
@@ -29,9 +29,6 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
-import javafx.scene.control.cell.TextFieldTableCell
-import javafx.util.Callback
-import javafx.util.StringConverter
 
 
 class PrimaryView {
@@ -79,10 +76,6 @@ class PrimaryView {
                 project.value = configuration.loadProject(appConfig.projectFile)
             else
                 project.value = Project()
-
-            // create test project
-            // todo: remove this for real use case
-            //project.value = createTestProject()
 
             // for updating the property view
             propertiesControl.propertyChanged += {
@@ -198,7 +191,7 @@ class PrimaryView {
     fun createTestProject() : Project
     {
         val project = Project()
-        project.name.value = "Chateau Project"
+        project.name.value = "Test Project"
 
         // add dmx structure
         val node = DmxNode()
@@ -389,5 +382,22 @@ class PrimaryView {
 
     fun onShowSyphonSetting(actionEvent: ActionEvent) {
         initSettingsView(project.value.syphonSettings, "Syphon")
+    }
+
+    fun onAddWeightClicked(actionEvent: ActionEvent) {
+        UITask.run({
+            val weight = Weight(0, 0, 0, 0, 0, 0, project.value.network)
+            project.value.network.weights.add(weight)
+            initSettingsView(weight, "New Weight")
+        }, {updateUI()}, ("add weight"))
+    }
+
+    fun onRemoveWeightClicked(actionEvent: ActionEvent) {
+        UITask.run({
+            val item = weightTableView.selectionModel.selectedItem
+
+            if(item != null)
+                project.value.network.weights.remove(item)
+        }, {updateUI()}, ("remove weight"))
     }
 }

@@ -3,6 +3,7 @@ package ch.bildspur.anna.renderer
 import ch.bildspur.anna.controller.timer.TimerTask
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.ann.Neuron
+import processing.core.PConstants
 import processing.core.PGraphics
 import processing.core.PVector
 
@@ -22,7 +23,7 @@ class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
 
     // lookup tables
     lateinit var neuronPositions: MutableList<MutableList<PVector>>
-    lateinit var indexByNeurons : MutableMap<Neuron, Pair<Int, Int>>
+    lateinit var indexByNeurons: MutableMap<Neuron, Pair<Int, Int>>
 
     override fun setup() {
         // setup dimensions
@@ -65,6 +66,9 @@ class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
 
         if (viewSettings.renderWeights.value)
             renderWeights()
+
+        if (viewSettings.renderInformation.value)
+            renderInformation()
     }
 
     override fun dispose() {
@@ -138,23 +142,68 @@ class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
         }
     }
 
-    fun getLEDPosition(neuron : Neuron, ledIndex : Int) : PVector
-    {
+    private fun renderInformation() {
+        // set text color
+        g.fill(255)
+        g.noStroke()
+        g.textAlign(PConstants.LEFT, PConstants.CENTER)
+
+        g.pushMatrix()
+
+        // translate to text zheight
+        g.translate(0f, 0f, viewSettings.textZHeight.value)
+
+        // layers
+        layers.filter { it.neurons.isNotEmpty() }.forEachIndexed { l, layer ->
+            g.pushMatrix()
+            val p = neuronPositions[l][0]
+
+            g.translate(p.x + viewSettings.layerTextShift.value, p.y, p.z)
+            g.textSize(viewSettings.layerTextSize.value)
+            g.text("Layer $l", 0f, 0f)
+            g.popMatrix()
+
+            // neuron
+            layer.neurons.forEachIndexed { n, neuron ->
+                g.pushMatrix()
+                val p = neuronPositions[l][n]
+
+                g.translate(p.x + viewSettings.neuronTextShift.value, p.y - viewSettings.neuronTextShift.value, p.z)
+                g.textSize(viewSettings.neuronTextSize.value)
+                g.text("Neuron $l.$n", 0f, 0f)
+                g.popMatrix()
+
+                // leds
+                neuron.ledArray.leds.forEachIndexed { i, led ->
+                    g.pushMatrix()
+                    val p = getLEDPosition(neuron, i)
+
+                    g.translate(p.x + viewSettings.ledTextShift.value, p.y, p.z)
+                    g.textSize(viewSettings.ledTextSize.value)
+                    g.text("$l.$n.$i", 0f, 0f)
+
+                    g.popMatrix()
+                }
+            }
+        }
+
+        g.popMatrix()
+    }
+
+    fun getLEDPosition(neuron: Neuron, ledIndex: Int): PVector {
         val position = getNeuronPosition(neuron)
         val shift = getLEDPositionYShift(neuron, ledIndex)
 
         return PVector(position.x, position.y + shift, position.z)
     }
 
-    private fun getLEDPositionYShift(neuron : Neuron, ledIndex : Int) : Float
-    {
+    private fun getLEDPositionYShift(neuron: Neuron, ledIndex: Int): Float {
         val maxLedLength = (neuron.ledArray.leds.size - 1) * viewSettings.ledSpace.value
         return (ledIndex * viewSettings.ledSpace.value) - (maxLedLength / 2f)
     }
 
-    private fun getNeuronPosition(neuron : Neuron) : PVector
-    {
-        if(!indexByNeurons.containsKey(neuron))
+    private fun getNeuronPosition(neuron: Neuron): PVector {
+        if (!indexByNeurons.containsKey(neuron))
             return PVector()
 
         val indexes = indexByNeurons[neuron]!!
