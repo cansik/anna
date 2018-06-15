@@ -32,11 +32,6 @@ class Project {
     @BooleanParameter("Enable VSYNC*")
     var vsyncMode = DataModel(true)
 
-
-    @Expose
-    @BooleanParameter("High Detail Mode")
-    var highDetail = DataModel(true)
-
     @Expose
     @BooleanParameter("Fullscreen Mode*")
     var isFullScreenMode = DataModel(false)
@@ -46,13 +41,8 @@ class Project {
     var fullScreenDisplay = DataModel(0)
 
     @Expose
-    @SliderParameter("LedArray Detail", 2.0, 10.0, 1.0)
-    var tubeDetail = DataModel(5.0)
-
-    @Expose
     @BooleanParameter("ArtNet Rendering")
     var isArtNetRendering = DataModel(true)
-
 
     @Expose
     var nodes = CopyOnWriteArrayList<DmxNode>()

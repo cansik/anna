@@ -12,21 +12,20 @@ import ch.bildspur.anna.model.light.DmxNode
 import ch.bildspur.anna.model.light.DmxUniverse
 import ch.bildspur.anna.model.light.Led
 import ch.bildspur.anna.model.light.LedArray
+import ch.bildspur.anna.view.properties.PropertiesControl
 import ch.bildspur.anna.view.util.UITask
-import javafx.application.Platform
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
+import javafx.scene.control.Alert
+import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.TitledPane
 import javafx.scene.layout.BorderPane
 import javafx.stage.FileChooser
 import javafx.stage.Stage
 import processing.core.PApplet
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.concurrent.thread
-import com.jogamp.newt.opengl.util.NEWTDemoListener.setTitle
-import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.Alert
 import kotlin.system.exitProcess
 
 
@@ -35,6 +34,11 @@ class PrimaryView {
 
     @FXML
     lateinit var root: BorderPane
+
+    @FXML
+    lateinit var propertiesPane : TitledPane
+
+    val propertiesControl = PropertiesControl()
 
     val configuration = ConfigurationController()
 
@@ -55,6 +59,7 @@ class PrimaryView {
         UITask.run({
             // load app config
             appConfig = configuration.loadAppConfig()
+            propertiesPane.content = propertiesControl
 
             // create or load configuration
             if (Files.exists(Paths.get(appConfig.projectFile)) && !Files.isDirectory(Paths.get(appConfig.projectFile)))
@@ -65,6 +70,13 @@ class PrimaryView {
             // create test project
             // todo: remove this for real use case
             //project.value = createTestProject()
+
+            // for updating the property view
+            propertiesControl.propertyChanged += {
+                updateUI()
+            }
+
+            initSettingsView(project.value, "Project")
 
             // start processing
             startProcessing()
@@ -145,6 +157,12 @@ class PrimaryView {
         return project
     }
 
+    private fun initSettingsView(value : Any, name : String)
+    {
+        propertiesPane.text = name
+        propertiesControl.initView(value)
+    }
+
     fun resetRenderer() {
         sketch.proposeResetRenderer()
     }
@@ -163,9 +181,23 @@ class PrimaryView {
         UITask.run({
             appConfig.projectFile = ""
 
+            project.value = Project()
+            resetRenderer()
+
+            initSettingsView(project.value, "Project")
+        }, { updateUI() }, "new project")
+    }
+
+    fun onNewChateauProject(actionEvent: ActionEvent) {
+        // reset current project
+        UITask.run({
+            appConfig.projectFile = ""
+
             project.value = createTestProject()
             resetRenderer()
-        }, { updateUI() }, "new project")
+
+            initSettingsView(project.value, "Project")
+        }, { updateUI() }, "new chateau project")
     }
 
     fun onOpenProject(e: ActionEvent) {
@@ -223,5 +255,17 @@ class PrimaryView {
         alert.contentText = "Developed by Florian Bruggisser 2018.\nwww.bildspur.ch\n\nURI: ${Sketch.URI_NAME}"
 
         alert.showAndWait()
+    }
+
+    fun onShowProjectSetting(actionEvent: ActionEvent) {
+        initSettingsView(project.value, "Project")
+    }
+
+    fun onShowLightSetting(actionEvent: ActionEvent) {
+        initSettingsView(project.value.light, "Light")
+    }
+
+    fun onShowVisualisationSetting(actionEvent: ActionEvent) {
+        initSettingsView(project.value.networkViewSettings, "Visualisation")
     }
 }
