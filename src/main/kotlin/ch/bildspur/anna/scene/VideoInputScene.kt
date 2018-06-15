@@ -69,8 +69,8 @@ class VideoInputScene(project : Project) : BaseScene(project) {
         val translation = PVector((visualisation.annWidth / 2f) + (padding.x / 2), (visualisation.annHeight / 2f) + + (padding.y / 2))
 
         network.weights.forEach {
-            val led1Pos = visualisation.getLEDPosition(it.neuron1, it.ledIndex1).translate(translation)
-            val led2Pos = visualisation.getLEDPosition(it.neuron2, it.ledIndex2).translate(translation)
+            val led1Pos = visualisation.getLEDPosition(it.neuron1, it.ledIndex1.value).translate(translation)
+            val led2Pos = visualisation.getLEDPosition(it.neuron2, it.ledIndex2.value).translate(translation)
             val center = PVector.lerp(led1Pos, led2Pos, 0.5f)
 
             val fixture1 = LineFixture(led1Pos, center, thickness = 5)

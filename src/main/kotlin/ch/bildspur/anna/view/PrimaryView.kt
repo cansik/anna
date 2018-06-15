@@ -15,13 +15,12 @@ import ch.bildspur.anna.model.light.LedArray
 import ch.bildspur.anna.scene.SceneManager
 import ch.bildspur.anna.view.properties.PropertiesControl
 import ch.bildspur.anna.view.util.UITask
+import ch.bildspur.anna.view.util.cellFactory
+import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
-import javafx.scene.control.Alert
+import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.Menu
-import javafx.scene.control.RadioMenuItem
-import javafx.scene.control.TitledPane
 import javafx.scene.layout.BorderPane
 import javafx.stage.FileChooser
 import javafx.stage.Stage
@@ -30,6 +29,9 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
+import javafx.scene.control.cell.TextFieldTableCell
+import javafx.util.Callback
+import javafx.util.StringConverter
 
 
 class PrimaryView {
@@ -43,6 +45,11 @@ class PrimaryView {
 
     @FXML
     lateinit var sceneMenu : Menu
+
+    @FXML
+    lateinit var weightTableView : TableView<Weight>
+
+    val weightModels = FXCollections.observableArrayList<Weight>()
 
     val propertiesControl = PropertiesControl()
 
@@ -82,6 +89,7 @@ class PrimaryView {
                 updateUI()
             }
 
+            setupWeightTableView()
             initSettingsView(project.value, "Project")
 
             // start processing
@@ -91,6 +99,47 @@ class PrimaryView {
                 setupSceneSwitching()
             }
         }, { updateUI() }, "startup")
+    }
+
+    fun setupWeightTableView()
+    {
+        // setup columns
+        val layer1Column = TableColumn<Weight, Int>("Layer 1")
+        layer1Column.cellFactory { it.layerIndex1.value }
+        weightTableView.columns.add(layer1Column)
+
+        val layer2Column = TableColumn<Weight, Int>("Layer 2")
+        layer2Column.cellFactory { it.layerIndex2.value }
+        weightTableView.columns.add(layer2Column)
+
+        val neuron1Column = TableColumn<Weight, Int>("Neuron 1")
+        neuron1Column.cellFactory { it.neuronIndex1.value }
+        weightTableView.columns.add(neuron1Column)
+
+        val neuron2Column = TableColumn<Weight, Int>("Neuron 2")
+        neuron2Column.cellFactory { it.neuronIndex2.value }
+        weightTableView.columns.add(neuron2Column)
+
+        val led1Column = TableColumn<Weight, Int>("LED 1")
+        led1Column.cellFactory { it.ledIndex1.value }
+        weightTableView.columns.add(led1Column)
+
+        val led2Column = TableColumn<Weight, Int>("LED 2")
+        led2Column.cellFactory { it.ledIndex2.value }
+        weightTableView.columns.add(led2Column)
+
+        // setup items
+        weightModels.clear()
+        weightModels.addAll(project.value.network.weights)
+        weightTableView.items = weightModels
+
+        // setup select
+        weightTableView.selectionModel.selectedItemProperty().addListener { o ->
+            val item = weightTableView.selectionModel.selectedItem
+
+            if(item != null)
+                initSettingsView(item, "Weight")
+        }
     }
 
     fun setupSceneSwitching()

@@ -120,8 +120,8 @@ class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
 
     private fun renderWeights() {
         network.weights.forEach {
-            val led1Pos = getLEDPosition(it.neuron1, it.ledIndex1)
-            val led2Pos = getLEDPosition(it.neuron2, it.ledIndex2)
+            val led1Pos = getLEDPosition(it.neuron1, it.ledIndex1.value)
+            val led2Pos = getLEDPosition(it.neuron2, it.ledIndex2.value)
 
             // render line from pc to pn
             g.noFill()
