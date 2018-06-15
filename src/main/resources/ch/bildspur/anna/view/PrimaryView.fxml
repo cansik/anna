@@ -35,12 +35,9 @@
           <Menu mnemonicParsing="false" text="Settings">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#onShowProjectSetting" text="Project" />
-                  <Menu mnemonicParsing="false" text="Renderer">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onShowLightSetting" text="Light" />
-                        <MenuItem mnemonicParsing="false" onAction="#onShowVisualisationSetting" text="Visualisation" />
-                    </items>
-                  </Menu>
+                <MenuItem mnemonicParsing="false" onAction="#onShowLightSetting" text="Light" />
+                  <MenuItem mnemonicParsing="false" onAction="#onShowVisualisationSetting" text="Visualisation" />
+                  <MenuItem mnemonicParsing="false" onAction="#onShowSyphonSetting" text="Syphon" />
             </items>
           </Menu>
             <Menu fx:id="sceneMenu" mnemonicParsing="false" text="Scenes" />

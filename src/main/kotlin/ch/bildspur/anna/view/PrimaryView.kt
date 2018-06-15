@@ -332,4 +332,8 @@ class PrimaryView {
     fun onExportConnections(actionEvent: ActionEvent) {
         println("not implemented!")
     }
+
+    fun onShowSyphonSetting(actionEvent: ActionEvent) {
+        initSettingsView(project.value.syphonSettings, "Syphon")
+    }
 }
