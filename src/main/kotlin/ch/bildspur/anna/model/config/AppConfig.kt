@@ -1,4 +1,4 @@
-package ch.bildspur.anna.model
+package ch.bildspur.anna.model.config
 
 import com.google.gson.annotations.Expose
 

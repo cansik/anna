@@ -2,7 +2,7 @@ package ch.bildspur.anna.view
 
 import ch.bildspur.anna.Sketch
 import ch.bildspur.anna.configuration.ConfigurationController
-import ch.bildspur.anna.model.AppConfig
+import ch.bildspur.anna.model.config.AppConfig
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.ann.Layer
@@ -19,6 +19,8 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.Menu
+import javafx.scene.control.RadioMenuItem
 import javafx.scene.control.TitledPane
 import javafx.scene.layout.BorderPane
 import javafx.stage.FileChooser
@@ -38,6 +40,9 @@ class PrimaryView {
 
     @FXML
     lateinit var propertiesPane : TitledPane
+
+    @FXML
+    lateinit var sceneMenu : Menu
 
     val propertiesControl = PropertiesControl()
 
@@ -81,7 +86,41 @@ class PrimaryView {
 
             // start processing
             startProcessing()
+
+            sketch.afterRenderReset += {
+                setupSceneSwitching()
+            }
         }, { updateUI() }, "startup")
+    }
+
+    fun setupSceneSwitching()
+    {
+        project.value.sceneSettings.activeScene.onChanged.clear()
+        sceneMenu.items.clear()
+
+        val sceneManager = sketch.renderer.filterIsInstance<SceneManager>().first()
+        sceneManager.scenes.forEach { scene ->
+            val item = RadioMenuItem()
+
+            item.text = scene.name
+            item.setOnAction {
+                project.value.sceneSettings.activeScene.value = scene.name
+            }
+
+            sceneMenu.items.add(item)
+        }
+
+        project.value.sceneSettings.activeScene.onChanged += { name ->
+            val scene = sceneManager.scenes.find { it.name == name } ?: sceneManager.scenes.first()
+            val item = sceneMenu.items.filterIsInstance<RadioMenuItem>().find { it.text == name }
+                    ?: sceneMenu.items.filterIsInstance<RadioMenuItem>().first()
+
+            sceneMenu.items.filterIsInstance<RadioMenuItem>().forEach { it.isSelected = false}
+            item.isSelected = true
+
+            sceneManager.switchScene(scene)
+        }
+        project.value.sceneSettings.activeScene.fireLatest()
     }
 
     fun startProcessing() {
@@ -267,7 +306,7 @@ class PrimaryView {
     }
 
     fun onShowVisualisationSetting(actionEvent: ActionEvent) {
-        initSettingsView(project.value.networkViewSettings, "Visualisation")
+        initSettingsView(project.value.visualisationSettings, "Visualisation")
     }
 
     fun onResetRenderer(actionEvent: ActionEvent) {

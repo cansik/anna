@@ -4,6 +4,7 @@ import ch.bildspur.anna.io.ArtNetConnection
 import ch.bildspur.anna.controller.PeasyController
 import ch.bildspur.anna.controller.timer.Timer
 import ch.bildspur.anna.controller.timer.TimerTask
+import ch.bildspur.anna.event.Event
 import ch.bildspur.anna.io.IOConnection
 import ch.bildspur.anna.io.SyphonInput
 import ch.bildspur.anna.model.DataModel
@@ -21,6 +22,7 @@ import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.opengl.PJOGL
+import javax.swing.Renderer
 
 
 /**
@@ -61,7 +63,9 @@ class Sketch : PApplet() {
 
 
     @Volatile
-    var isInitialised = false
+    var isInitialised = DataModel(false)
+
+    var afterRenderReset = Event<Any>()
 
     var fpsOverTime = 0f
 
@@ -187,13 +191,16 @@ class Sketch : PApplet() {
                 image(canvas, 0f, 0f)
 
             // render syphon frame
-            //image(syphon.frame, 50f, 50f, syphon.frame.width / 2f, syphon.frame.height / 2f)
+
+            if(project.value.syphonSettings.showSyphonInput.value)
+                image(syphon.frame, 50f, 50f, syphon.frame.width / 2f, syphon.frame.height / 2f)
+
             drawFPS(g)
         }
     }
 
     fun proposeResetRenderer() {
-        if (isInitialised) {
+        if (isInitialised.value) {
             isResetRendererProposed = true
         }
     }
@@ -245,6 +252,9 @@ class Sketch : PApplet() {
             it.setup()
             timer.addTask(it.timerTask)
         }
+
+        // renderer resetted
+        afterRenderReset.invoke(renderer)
     }
 
     private fun resetCanvas() {
@@ -271,7 +281,7 @@ class Sketch : PApplet() {
     }
 
     private fun initControllers(): Boolean {
-        if (!isInitialised) {
+        if (!isInitialised.value) {
             resetCanvas()
 
             timer.setup()
@@ -284,7 +294,7 @@ class Sketch : PApplet() {
             // open connections
             connections.forEach { it.open() }
 
-            isInitialised = true
+            isInitialised.value = true
             return true
         }
 

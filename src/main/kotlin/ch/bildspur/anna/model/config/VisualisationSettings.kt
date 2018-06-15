@@ -1,4 +1,4 @@
-package ch.bildspur.anna.model.view
+package ch.bildspur.anna.model.config
 
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.util.ColorMode
@@ -7,7 +7,7 @@ import ch.bildspur.anna.view.properties.FloatParameter
 import ch.bildspur.anna.view.properties.IntParameter
 import com.google.gson.annotations.Expose
 
-class NetworkViewSettings {
+class VisualisationSettings {
     // render mode
     @Expose
     @BooleanParameter("Render Nodes")

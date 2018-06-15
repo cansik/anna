@@ -1,7 +1,7 @@
 package ch.bildspur.anna.configuration
 
 import ch.bildspur.anna.Sketch
-import ch.bildspur.anna.model.AppConfig
+import ch.bildspur.anna.model.config.AppConfig
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.light.LedArray

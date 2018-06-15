@@ -43,6 +43,7 @@
                   </Menu>
             </items>
           </Menu>
+            <Menu fx:id="sceneMenu" mnemonicParsing="false" text="Scenes" />
             <Menu mnemonicParsing="false" text="Renderer">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onResetRenderer" text="Reset" />

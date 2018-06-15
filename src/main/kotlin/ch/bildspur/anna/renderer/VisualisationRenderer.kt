@@ -14,7 +14,7 @@ class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
 
     private val network = project.network
     private val layers = project.network.layers
-    private val viewSettings = project.networkViewSettings
+    private val viewSettings = project.visualisationSettings
 
     // view variables
     var annWidth: Float = 0f

@@ -2,12 +2,13 @@ package ch.bildspur.anna.model
 
 import ch.bildspur.anna.Sketch
 import ch.bildspur.anna.model.ann.Network
+import ch.bildspur.anna.model.config.Light
 import ch.bildspur.anna.model.light.DmxNode
-import ch.bildspur.anna.model.light.LedArray
-import ch.bildspur.anna.model.view.NetworkViewSettings
+import ch.bildspur.anna.model.config.SceneSettings
+import ch.bildspur.anna.model.config.SyphonSettings
+import ch.bildspur.anna.model.config.VisualisationSettings
 import ch.bildspur.anna.view.properties.BooleanParameter
 import ch.bildspur.anna.view.properties.IntParameter
-import ch.bildspur.anna.view.properties.SliderParameter
 import ch.bildspur.anna.view.properties.StringParameter
 import com.google.gson.annotations.Expose
 import java.util.concurrent.CopyOnWriteArrayList
@@ -51,8 +52,14 @@ class Project {
     var network = Network()
 
     @Expose
-    var networkViewSettings = NetworkViewSettings()
+    var visualisationSettings = VisualisationSettings()
+
+    @Expose
+    var sceneSettings = SceneSettings()
 
     @Expose
     var light = Light()
+
+    @Expose
+    var syphonSettings = SyphonSettings()
 }
