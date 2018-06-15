@@ -36,12 +36,18 @@
               <MenuItem mnemonicParsing="false" text="Project" />
                   <Menu mnemonicParsing="false" text="Renderer">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="ArtNet" />
+                      <MenuItem mnemonicParsing="false" text="Light" />
                         <MenuItem mnemonicParsing="false" text="Visualisation" />
                     </items>
                   </Menu>
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Export">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Mapping Mask" />
+                  <MenuItem mnemonicParsing="false" text="Connections" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#onShowAbout" text="About" />

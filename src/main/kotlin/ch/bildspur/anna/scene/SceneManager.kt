@@ -25,7 +25,7 @@ class SceneManager(project: Project) : IRenderer {
         timer.setup()
         scenes.forEach { it.setup() }
 
-        switchScene(neuralFlowScene)
+        switchScene(startPatternScene)
     }
 
     override fun render() {

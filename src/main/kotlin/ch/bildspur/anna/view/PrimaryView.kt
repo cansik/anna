@@ -64,7 +64,7 @@ class PrimaryView {
 
             // create test project
             // todo: remove this for real use case
-            project.value = createTestProject()
+            //project.value = createTestProject()
 
             // start processing
             startProcessing()
@@ -125,14 +125,18 @@ class PrimaryView {
 
         // create default connections on first n ledArray
         (0 until project.network.layers.size - 1).forEach {i ->
-            val l1 = project.network.layers[i]
-            val l2 = project.network.layers[i + 1]
-            val l3Size = if(project.network.layers.size > i + 2) project.network.layers[i + 2].neurons.size else 0
+            val layer1Index = i
+            val layer2Index = i + 1
+            val layer3Index = i + 2
+
+            val l1 = project.network.layers[layer1Index]
+            val l2 = project.network.layers[layer2Index]
+            val l3Size = if(project.network.layers.size > layer3Index) project.network.layers[layer3Index].neurons.size else 0
 
             // add weights per neuron
             l1.neurons.forEachIndexed {li1, n1 ->
                 l2.neurons.forEachIndexed {li2, n2 ->
-                    val weight = Weight(n1, li2, n2, li1 + l3Size)
+                    val weight = Weight(layer1Index, li1, li2, layer2Index, li2,li1 + l3Size, project.network)
                     project.network.weights.add(weight)
                 }
             }
@@ -159,7 +163,7 @@ class PrimaryView {
         UITask.run({
             appConfig.projectFile = ""
 
-            project.value = Project()
+            project.value = createTestProject()
             resetRenderer()
         }, { updateUI() }, "new project")
     }

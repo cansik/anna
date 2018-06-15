@@ -85,6 +85,9 @@ class VideoInputScene(project : Project) : BaseScene(project) {
 
     private fun createMap()
     {
+        if(visualisation.annWidth < 0f || visualisation.annHeight < 0f)
+            return
+
         val map = Sketch.instance.createGraphics((visualisation.annWidth + padding.x).toInt(), (visualisation.annHeight + padding.y).toInt())
         map.beginDraw()
         map.background(0f, 0f)

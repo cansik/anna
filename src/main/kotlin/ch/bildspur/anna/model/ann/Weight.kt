@@ -3,10 +3,19 @@ package ch.bildspur.anna.model.ann
 import ch.bildspur.anna.model.light.Led
 import com.google.gson.annotations.Expose
 
-class Weight(@Expose val neuron1: Neuron,
+class Weight(@Expose val layerIndex1: Int,
+             @Expose val neuronIndex1: Int,
              @Expose val ledIndex1: Int,
-             @Expose val neuron2: Neuron,
-             @Expose val ledIndex2: Int) {
+             @Expose val layerIndex2: Int,
+             @Expose val neuronIndex2: Int,
+             @Expose val ledIndex2: Int,
+             var network : Network = Network()) {
+
+    val neuron1: Neuron
+        get() = network.layers[layerIndex1].neurons[neuronIndex1]
+
+    val neuron2: Neuron
+        get() = network.layers[layerIndex2].neurons[neuronIndex2]
 
     val led1: Led
         get() = neuron1.ledArray[ledIndex1]

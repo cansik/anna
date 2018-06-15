@@ -55,7 +55,14 @@ class ConfigurationController {
     }
 
     fun loadProject(projectFile: String): Project {
-        return loadData(Paths.get(projectFile))
+        val project = loadData<Project>(Paths.get(projectFile))
+
+        // update weights
+        project.network.weights.forEach {
+            it.network = project.network
+        }
+
+        return project
     }
 
     fun saveProject(projectFile: String, project: Project) {
