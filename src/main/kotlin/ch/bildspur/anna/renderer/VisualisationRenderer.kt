@@ -180,7 +180,7 @@ class VisualisationRenderer(project: Project, val g: PGraphics) : IRenderer {
 
                     g.translate(p.x + viewSettings.ledTextShift.value, p.y, p.z)
                     g.textSize(viewSettings.ledTextSize.value)
-                    g.text("$l.$n.$i", 0f, 0f)
+                    g.text("$l.$n.$i (dmx: ${neuron.ledArray.universe.value}.${led.address})", 0f, 0f)
 
                     g.popMatrix()
                 }
