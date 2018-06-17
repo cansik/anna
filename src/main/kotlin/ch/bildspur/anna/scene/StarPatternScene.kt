@@ -9,9 +9,9 @@ import ch.bildspur.anna.util.forEachNode
 
 class StarPatternScene(project : Project) : BaseScene(project) {
     private var randomOnFactor = 0.95f
-    private var randomOffFactor = 0.8f
-    private var fadeOffSpeed = 0.01f
-    private var fadeOnSpeed = 0.01f
+    private var randomOffFactor = 0.9f
+    private var fadeOffSpeed = 0.05f
+    private var fadeOnSpeed = 0.05f
 
     private val rnd = ExtendedRandom()
 
@@ -27,9 +27,7 @@ class StarPatternScene(project : Project) : BaseScene(project) {
         // set all leds on
         network.forEachNode {
             it.ledArray.leds.forEach {
-                it.color.fadeH(200f, 0.05f)
-                it.color.fadeS(80f, 0.05f)
-                it.color.fadeB(100f, 0.05f)
+                it.color.fade(ColorMode.color(200f, 0f, 100f), 0.05f)
             }
         }
 
