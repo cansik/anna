@@ -88,8 +88,8 @@ class Weight(@Expose
 
     @ActionParameter("Mark Weight", "Red")
     val markWeightRed = {
-        led1.color.fade(ColorMode.color(255, 100, 100), fadeSpeed)
-        led2.color.fade(ColorMode.color(255, 100, 100), fadeSpeed)
+        led1.color.fade(ColorMode.color(347, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(347, 100, 100), fadeSpeed)
     }
 
     @ActionParameter("Mark Weight", "Green")
@@ -108,5 +108,10 @@ class Weight(@Expose
     val blackoutWeight = {
         led1.color.fade(ColorMode.color(0, 100, 0), fadeSpeed)
         led2.color.fade(ColorMode.color(0, 100, 0), fadeSpeed)
+    }
+
+    override fun toString() : String
+    {
+        return ("Weight (${layerIndex1.value}.${neuronIndex1.value}.${ledIndex1.value} - ${layerIndex2.value}.${neuronIndex2.value}.${ledIndex2.value})")
     }
 }

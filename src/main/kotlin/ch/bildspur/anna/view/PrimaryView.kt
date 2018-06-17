@@ -133,8 +133,9 @@ class PrimaryView {
         weightTableView.selectionModel.selectedItemProperty().addListener { o ->
             val item = weightTableView.selectionModel.selectedItem
 
-            if(item != null)
-                initSettingsView(item, "Weight")
+            if(item != null) {
+                initSettingsView(item, "$item")
+            }
         }
     }
 
