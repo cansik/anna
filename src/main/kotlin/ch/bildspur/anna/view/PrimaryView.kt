@@ -197,23 +197,27 @@ class PrimaryView {
         val node = DmxNode()
         node.universes.add(DmxUniverse(0))
         node.universes.add(DmxUniverse(1))
-        node.universes.add(DmxUniverse(2))
-        node.universes.add(DmxUniverse(3))
         project.nodes.add(node)
 
-        val ledsPerNode = 8
+        val pixelPerNode = 8
         val structure =  arrayOf(3, 4, 3, 2)
 
+        var usedAddresses = 0
+
         // create structure
-        structure.forEach {
+        structure.forEachIndexed { layerIndex, neuronCount ->
             val layer = Layer()
 
             // create nodes
-            (0 until it).forEach { i ->
+            (0 until neuronCount).forEach { i ->
+                val addressSize = pixelPerNode * Led.LED_ADDRESS_SIZE
                 val ledArray = LedArray(
-                        universe = DataModel(i),
-                        addressStart =  DataModel(i * ledsPerNode * Led.LED_ADDRESS_SIZE))
-                ledArray.ledCount.value = ledsPerNode
+                        universe = DataModel(0),
+                        addressStart =  DataModel(usedAddresses))
+                ledArray.ledCount.value = pixelPerNode
+                usedAddresses += addressSize
+
+                println("Addresses: $usedAddresses")
 
                 val neuron = Neuron(ledArray)
                 layer.neurons.add(neuron)
