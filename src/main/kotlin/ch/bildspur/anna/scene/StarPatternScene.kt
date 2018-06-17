@@ -8,12 +8,9 @@ import ch.bildspur.anna.util.ExtendedRandom
 import ch.bildspur.anna.util.forEachNode
 
 class StarPatternScene(project : Project) : BaseScene(project) {
-    private var randomOnFactor = 0.95f
-    private var randomOffFactor = 0.9f
-    private var fadeOffSpeed = 0.05f
-    private var fadeOnSpeed = 0.05f
-
     private val rnd = ExtendedRandom()
+
+    private val sceneSettings = project.sceneSettings
 
     private val task = TimerTask(500, { update() })
 
@@ -41,13 +38,13 @@ class StarPatternScene(project : Project) : BaseScene(project) {
 
                 if (ledBrightness > 10) {
                     //led is ON
-                    if (rnd.randomBoolean(randomOffFactor)) {
-                        it.color.fadeB(0f, fadeOnSpeed)
+                    if (rnd.randomBoolean(sceneSettings.starsFadeOffSpeed.value)) {
+                        it.color.fadeB(0f, sceneSettings.starsFadeOnSpeed.value)
                     }
                 } else {
                     //led is OFF
-                    if (rnd.randomBoolean(randomOnFactor)) {
-                        it.color.fadeB(rnd.randomFloat(50f, 100f), fadeOffSpeed)
+                    if (rnd.randomBoolean(sceneSettings.starsRandomOnFactor.value)) {
+                        it.color.fadeB(rnd.randomFloat(50f, 100f), sceneSettings.starsFadeOffSpeed.value)
                     }
                 }
             }

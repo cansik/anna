@@ -417,6 +417,11 @@ class PrimaryView {
     }
 
     fun onShowArtNetSetting(actionEvent: ActionEvent) {
-        initSettingsView(project.value.nodes.first(), "ArtNet")
+        if(project.value.nodes.isNotEmpty())
+            initSettingsView(project.value.nodes.first(), "ArtNet")
+    }
+
+    fun onSceneSetting(actionEvent: ActionEvent) {
+        initSettingsView(project.value.sceneSettings, "Scenes")
     }
 }
