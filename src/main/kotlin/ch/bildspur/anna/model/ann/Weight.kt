@@ -2,6 +2,8 @@ package ch.bildspur.anna.model.ann
 
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.light.Led
+import ch.bildspur.anna.util.ColorMode
+import ch.bildspur.anna.view.properties.ActionParameter
 import ch.bildspur.anna.view.properties.IntParameter
 import ch.bildspur.anna.view.properties.StringParameter
 import com.google.gson.annotations.Expose
@@ -41,6 +43,11 @@ class Weight(@Expose
             DataModel(ledIndex2),
             network)
 
+    // serialisation initializer
+    constructor() : this(0, 0, 0,0,0, 0)
+
+    private val fadeSpeed = 0.05f
+
     val neuron1: Neuron
         get() = network.layers[layerIndex1.value].neurons[neuronIndex1.value]
 
@@ -61,5 +68,45 @@ class Weight(@Expose
     fun isConnected(led : Led) : Boolean
     {
         return led == led1 || led == led2
+    }
+
+    @ActionParameter("Mark LED 1", "Select")
+    val markLED1 = {
+        led1.color.fade(ColorMode.color(0, 0, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Mark LED 2", "Select")
+    val markLED2 = {
+        led2.color.fade(ColorMode.color(0, 0, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Mark Weight", "White")
+    val markWeightWhite = {
+        led1.color.fade(ColorMode.color(0, 0, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(0, 0, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Mark Weight", "Red")
+    val markWeightRed = {
+        led1.color.fade(ColorMode.color(255, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(255, 100, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Mark Weight", "Green")
+    val markWeightGreen = {
+        led1.color.fade(ColorMode.color(120, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(120, 100, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Mark Weight", "Blue")
+    val markWeightBluen = {
+        led1.color.fade(ColorMode.color(200, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(200, 100, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Weight", "Blackout")
+    val blackoutWeight = {
+        led1.color.fade(ColorMode.color(0, 100, 0), fadeSpeed)
+        led2.color.fade(ColorMode.color(0, 100, 0), fadeSpeed)
     }
 }

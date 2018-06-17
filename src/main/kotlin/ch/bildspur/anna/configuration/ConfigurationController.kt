@@ -4,6 +4,7 @@ import ch.bildspur.anna.Sketch
 import ch.bildspur.anna.model.config.AppConfig
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.model.Project
+import ch.bildspur.anna.model.ann.Weight
 import ch.bildspur.anna.model.light.LedArray
 import com.github.salomonbrys.kotson.fromJson
 import com.github.salomonbrys.kotson.get
@@ -38,6 +39,7 @@ class ConfigurationController {
             .registerTypeAdapter(PVector::class.java, PVectorSerializer())
             .registerTypeAdapter(PVector::class.java, PVectorDeserializer())
             .registerTypeAdapter(LedArray::class.java, LedArrayInstanceCreator())
+            .registerTypeAdapter(Weight::class.java, WeigthInstanceCreator())
             .registerTypeAdapterFactory(PostProcessingEnabler())
             .create()
 
@@ -109,6 +111,12 @@ class ConfigurationController {
     private inner class LedArrayInstanceCreator : InstanceCreator<LedArray> {
         override fun createInstance(type: Type): LedArray {
             return LedArray()
+        }
+    }
+
+    private inner class WeigthInstanceCreator : InstanceCreator<Weight> {
+        override fun createInstance(type: Type): Weight {
+            return Weight()
         }
     }
 }
