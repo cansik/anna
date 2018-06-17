@@ -21,10 +21,28 @@ class SceneSettings {
     var starsRandomOffFactor = DataModel(0.9f)
 
     @Expose
-    @SliderParameter("Stars Fade On Speed", 0.01, 1.0, 0.01)
+    @SliderParameter("Stars Fade Off Speed", 0.01, 1.0, 0.01)
     var starsFadeOffSpeed = DataModel(0.05f)
 
     @Expose
-    @SliderParameter("Stars Rnd Off Speed", 0.01, 1.0, 0.01)
+    @SliderParameter("Stars Rnd On Speed", 0.01, 1.0, 0.01)
     var starsFadeOnSpeed = DataModel(0.05f)
+
+    // neurons
+
+    @Expose
+    @SliderParameter("Neuron Rnd Add Factor", 0.8, 1.0, 0.01)
+    var neuronRandomAddFactor = DataModel(0.95f)
+
+    @Expose
+    @SliderParameter("Neuron Fade On Speed", 0.01, 1.0, 0.01)
+    var neuronFadeOnSpeed = DataModel(0.5f)
+
+    @Expose
+    @SliderParameter("Nueron Rnd Off Speed", 0.01, 1.0, 0.01)
+    var neuronFadeOffSpeed = DataModel(0.5f)
+
+    @Expose
+    @SliderParameter("Nueron Speed", 0.01, 0.5, 0.01)
+    var neuronSpeed = DataModel(0.05f)
 }
