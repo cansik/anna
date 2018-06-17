@@ -43,7 +43,7 @@ class VideoInputScene(project : Project) : BaseScene(project) {
     private var pixelMappingThread = thread(false) {
         while (isPixelMappingThreadRunning)
         {
-            if(isRunning && syphon.frame.width > 0) {
+            if(project.syphonSettings.asyncSyphonInput.value && isRunning && syphon.frame.width > 0) {
                 // lazy init buffer
                 if(!::buffer.isInitialized)
                     buffer = Sketch.instance.createGraphics(syphon.frame.width, syphon.frame.height, PConstants.JAVA2D)
@@ -132,6 +132,9 @@ class VideoInputScene(project : Project) : BaseScene(project) {
     }
 
     override fun update() {
+        if(!project.syphonSettings.asyncSyphonInput.value)
+            mapper.updateFixtures(syphon.frame)
+
         ledToFixtureLookup.forEach { led, fixture ->
             led.color.fade(fixture.color, 1.0f)
         }

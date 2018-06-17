@@ -8,4 +8,8 @@ class SyphonSettings {
     @Expose
     @BooleanParameter("Show Syphon Input")
     var showSyphonInput = DataModel(false)
+
+    @Expose
+    @BooleanParameter("Async Input")
+    var asyncSyphonInput = DataModel(false)
 }
