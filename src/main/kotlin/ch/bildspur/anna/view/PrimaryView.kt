@@ -121,6 +121,15 @@ class PrimaryView {
         led2Column.cellFactory { it.ledIndex2.value }
         weightTableView.columns.add(led2Column)
 
+        val led1AddressColumn = TableColumn<Weight, String>("LED 1 DMX")
+        led1AddressColumn.cellFactory { it.led1.address.toString() }
+        weightTableView.columns.add(led1AddressColumn)
+
+        val led2AddressColumn = TableColumn<Weight, String>("LED 2 DMX")
+        led2AddressColumn.cellFactory { it.led2.address.toString() }
+        weightTableView.columns.add(led2AddressColumn)
+
+
         // set column
         weightTableView.columns.forEach { it.style = "-fx-alignment: CENTER;" }
 
@@ -257,6 +266,7 @@ class PrimaryView {
 
     fun resetRenderer() {
         sketch.proposeResetRenderer()
+        updateUI()
     }
 
     fun rebuildRenderer() {
