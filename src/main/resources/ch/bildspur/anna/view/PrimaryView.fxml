@@ -44,6 +44,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#onShowLightSetting" text="Light" />
                   <MenuItem mnemonicParsing="false" onAction="#onShowVisualisationSetting" text="Visualisation" />
                   <MenuItem mnemonicParsing="false" onAction="#onShowSyphonSetting" text="Syphon" />
+                  <MenuItem mnemonicParsing="false" onAction="#onShowArtNetSetting" text="ArtNet" />
             </items>
           </Menu>
             <Menu fx:id="sceneMenu" mnemonicParsing="false" text="Scenes" />

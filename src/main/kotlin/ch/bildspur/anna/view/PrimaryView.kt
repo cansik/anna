@@ -415,4 +415,8 @@ class PrimaryView {
                 project.value.network.weights.remove(item)
         }, {updateUI()}, ("remove weight"))
     }
+
+    fun onShowArtNetSetting(actionEvent: ActionEvent) {
+        initSettingsView(project.value.nodes.first(), "ArtNet")
+    }
 }
