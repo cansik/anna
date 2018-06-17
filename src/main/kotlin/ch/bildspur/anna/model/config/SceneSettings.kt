@@ -13,18 +13,18 @@ class SceneSettings {
     var activeScene = DataModel("")
 
     @Expose
-    @SliderParameter("Stars Rnd On Factor", 0.8, 1.0)
+    @SliderParameter("Stars Rnd On Factor", 0.8, 1.0, 0.01)
     var starsRandomOnFactor = DataModel(0.95f)
 
     @Expose
-    @SliderParameter("Stars Rnd Off Factor", 0.8, 1.0)
+    @SliderParameter("Stars Rnd Off Factor", 0.8, 1.0, 0.01)
     var starsRandomOffFactor = DataModel(0.9f)
 
     @Expose
-    @SliderParameter("Stars Fade On Speed", 0.01, 1.0)
+    @SliderParameter("Stars Fade On Speed", 0.01, 1.0, 0.01)
     var starsFadeOffSpeed = DataModel(0.05f)
 
     @Expose
-    @SliderParameter("Stars Rnd Off Speed", 0.01, 1.0)
+    @SliderParameter("Stars Rnd Off Speed", 0.01, 1.0, 0.01)
     var starsFadeOnSpeed = DataModel(0.05f)
 }
