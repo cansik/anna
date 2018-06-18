@@ -75,6 +75,11 @@ class PropertiesControl : VBox() {
                 val annotation = it.getAnnotation(PVectorAngleParameter::class.java)
                 addProperty(annotation.name, PVectorAngleProperty(it, obj, annotation))
             }
+
+            if (it.isAnnotationPresent(ColorParameter::class.java)) {
+                val annotation = it.getAnnotation(ColorParameter::class.java)
+                addProperty(annotation.name, ColorProperty(it, obj, annotation))
+            }
         }
     }
 
@@ -112,7 +117,8 @@ class PropertiesControl : VBox() {
                     it.isAnnotationPresent(ActionParameter::class.java) ||
                     it.isAnnotationPresent(FloatParameter::class.java) ||
                     it.isAnnotationPresent(ArrayParameter::class.java) ||
-                    it.isAnnotationPresent(PVectorAngleParameter::class.java)
+                    it.isAnnotationPresent(PVectorAngleParameter::class.java) ||
+                    it.isAnnotationPresent(ColorParameter::class.java)
 
         }
         fields.forEach { it.isAccessible = true }

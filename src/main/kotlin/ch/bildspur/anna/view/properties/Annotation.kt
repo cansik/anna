@@ -34,8 +34,11 @@ annotation class PVectorAngleParameter(val name: String)
 
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ActionParameter(val name: String, val caption: String)
+annotation class ColorParameter(val name: String)
 
+@Target(AnnotationTarget.FIELD)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ActionParameter(val name: String, val caption: String)
 
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
