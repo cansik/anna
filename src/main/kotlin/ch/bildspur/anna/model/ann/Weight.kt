@@ -6,6 +6,7 @@ import ch.bildspur.anna.util.ColorMode
 import ch.bildspur.anna.view.properties.ActionParameter
 import ch.bildspur.anna.view.properties.IntParameter
 import ch.bildspur.anna.view.properties.StringParameter
+import ch.bildspur.anna.view.properties.BooleanParameter
 import com.google.gson.annotations.Expose
 
 class Weight(@Expose
@@ -48,6 +49,10 @@ class Weight(@Expose
 
     private val fadeSpeed = 0.05f
 
+    @Expose
+    @BooleanParameter("POF Connected")
+    var isPofConnected = DataModel(false)
+
     val neuron1: Neuron
         get() = network.layers[layerIndex1.value].neurons[neuronIndex1.value]
 
@@ -88,8 +93,8 @@ class Weight(@Expose
 
     @ActionParameter("Mark Weight", "Red")
     val markWeightRed = {
-        led1.color.fade(ColorMode.color(347, 100, 100), fadeSpeed)
-        led2.color.fade(ColorMode.color(347, 100, 100), fadeSpeed)
+        led1.color.fade(ColorMode.color(0, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(0, 100, 100), fadeSpeed)
     }
 
     @ActionParameter("Mark Weight", "Green")
@@ -99,9 +104,27 @@ class Weight(@Expose
     }
 
     @ActionParameter("Mark Weight", "Blue")
-    val markWeightBluen = {
-        led1.color.fade(ColorMode.color(200, 100, 100), fadeSpeed)
-        led2.color.fade(ColorMode.color(200, 100, 100), fadeSpeed)
+    val markWeightBlue = {
+        led1.color.fade(ColorMode.color(244, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(244, 100, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Mark Weight", "Magenta")
+    val markWeightMagenta = {
+        led1.color.fade(ColorMode.color(310, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(310, 100, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Mark Weight", "Cyan")
+    val markWeightCyan = {
+        led1.color.fade(ColorMode.color(195, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(195, 100, 100), fadeSpeed)
+    }
+
+    @ActionParameter("Mark Weight", "Yellow")
+    val markWeightYellow = {
+        led1.color.fade(ColorMode.color(50, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(50, 100, 100), fadeSpeed)
     }
 
     @ActionParameter("Weight", "Blackout")

@@ -13,7 +13,7 @@ class ArtNetRenderer(val project: Project, val artnet: ArtNetConnection) : IRend
 
     lateinit var ledArrays: List<LedArray>
 
-    private val task = TimerTask(15, { render() }, "ArtNetRenderer")
+    private val task = TimerTask(0, { render() }, "ArtNetRenderer")
     override val timerTask: TimerTask
         get() = task
 

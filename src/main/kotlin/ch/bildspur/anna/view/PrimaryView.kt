@@ -129,6 +129,10 @@ class PrimaryView {
         led2AddressColumn.cellFactory { it.led2.address.toString() }
         weightTableView.columns.add(led2AddressColumn)
 
+        val pofConnectedColumn = TableColumn<Weight, String>("POF Connected")
+        pofConnectedColumn.cellFactory { it.isPofConnected.value.toString() }
+        weightTableView.columns.add(pofConnectedColumn)
+
 
         // set column
         weightTableView.columns.forEach { it.style = "-fx-alignment: CENTER;" }
