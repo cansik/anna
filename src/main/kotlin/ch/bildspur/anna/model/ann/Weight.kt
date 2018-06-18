@@ -54,7 +54,7 @@ class Weight(@Expose
     var isPofConnected = DataModel(false)
 
     @Expose
-    @StringParameter("MarkerColor")
+    @StringParameter("Marker Color", isEditable = false)
     var markerColor = DataModel("")
 
     val neuron1: Neuron

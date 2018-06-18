@@ -2,7 +2,7 @@ package ch.bildspur.anna.view.properties
 
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class StringParameter(val name: String)
+annotation class StringParameter(val name: String, val isEditable : Boolean = true)
 
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
