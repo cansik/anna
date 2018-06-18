@@ -54,6 +54,11 @@
                 <MenuItem mnemonicParsing="false" onAction="#onResetRenderer" text="Reset" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="POF">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#onResetPOFMarkers" text="Reset Markers" />
+                </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Export">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onExportMappingMask" text="Mapping Mask" />

@@ -429,4 +429,11 @@ class PrimaryView {
     fun onSceneSetting(actionEvent: ActionEvent) {
         initSettingsView(project.value.sceneSettings, "Scenes")
     }
+
+    fun onResetPOFMarkers(actionEvent: ActionEvent) {
+        // reset mapping name
+        project.value.network.weights.forEach {
+            it.markerColor.value = ""
+        }
+    }
 }

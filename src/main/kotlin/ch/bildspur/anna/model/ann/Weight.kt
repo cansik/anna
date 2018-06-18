@@ -105,43 +105,58 @@ class Weight(@Expose
         markerColor.value = "Red"
     }
 
+    @ActionParameter("Mark Weight", "Orange")
+    val markWeightOrange = {
+        led1.color.fade(ColorMode.color(45, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(45, 100, 100), fadeSpeed)
+        markerColor.value = "Orange"
+    }
+
+    @ActionParameter("Mark Weight", "Lime")
+    val markWeightLime = {
+        led1.color.fade(ColorMode.color(90, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(90, 100, 100), fadeSpeed)
+
+        markerColor.value = "Lime"
+    }
+
     @ActionParameter("Mark Weight", "Green")
     val markWeightGreen = {
-        led1.color.fade(ColorMode.color(120, 100, 100), fadeSpeed)
-        led2.color.fade(ColorMode.color(120, 100, 100), fadeSpeed)
+        led1.color.fade(ColorMode.color(135, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(135, 100, 100), fadeSpeed)
 
         markerColor.value = "Green"
     }
 
-    @ActionParameter("Mark Weight", "Blue")
-    val markWeightBlue = {
-        led1.color.fade(ColorMode.color(244, 100, 100), fadeSpeed)
-        led2.color.fade(ColorMode.color(244, 100, 100), fadeSpeed)
-
-        markerColor.value = "Blue"
-    }
-
-    @ActionParameter("Mark Weight", "Magenta")
-    val markWeightMagenta = {
-        led1.color.fade(ColorMode.color(310, 100, 100), fadeSpeed)
-        led2.color.fade(ColorMode.color(310, 100, 100), fadeSpeed)
-
-        markerColor.value = "Magenta"
-    }
-
     @ActionParameter("Mark Weight", "Cyan")
     val markWeightCyan = {
-        led1.color.fade(ColorMode.color(195, 100, 100), fadeSpeed)
-        led2.color.fade(ColorMode.color(195, 100, 100), fadeSpeed)
+        led1.color.fade(ColorMode.color(180, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(180, 100, 100), fadeSpeed)
 
         markerColor.value = "Cyan"
     }
 
-    @ActionParameter("Mark Weight", "Yellow")
-    val markWeightYellow = {
-        led1.color.fade(ColorMode.color(50, 100, 100), fadeSpeed)
-        led2.color.fade(ColorMode.color(50, 100, 100), fadeSpeed)
-        markerColor.value = "Yellow"
+    @ActionParameter("Mark Weight", "Blue")
+    val markWeightBlue = {
+        led1.color.fade(ColorMode.color(225, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(225, 100, 100), fadeSpeed)
+
+        markerColor.value = "Blue"
+    }
+
+    @ActionParameter("Mark Weight", "Purple")
+    val markWeightPurple = {
+        led1.color.fade(ColorMode.color(270, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(270, 100, 100), fadeSpeed)
+
+        markerColor.value = "Purple"
+    }
+
+    @ActionParameter("Mark Weight", "Magenta")
+    val markWeightMagenta = {
+        led1.color.fade(ColorMode.color(315, 100, 100), fadeSpeed)
+        led2.color.fade(ColorMode.color(315, 100, 100), fadeSpeed)
+        markerColor.value = "Magenta"
     }
 
     @ActionParameter("Weight", "Blackout")
