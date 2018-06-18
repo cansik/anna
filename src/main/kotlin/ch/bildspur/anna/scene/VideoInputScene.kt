@@ -3,6 +3,7 @@ package ch.bildspur.anna.scene
 import ch.bildspur.anna.Sketch
 import ch.bildspur.anna.controller.timer.TimerTask
 import ch.bildspur.anna.mapping.Fixture
+import ch.bildspur.anna.mapping.IntensityLineFixture
 import ch.bildspur.anna.mapping.LineFixture
 import ch.bildspur.anna.mapping.PixelMapper
 import ch.bildspur.anna.model.Project
@@ -73,8 +74,8 @@ class VideoInputScene(project : Project) : BaseScene(project) {
             val led2Pos = visualisation.getLEDPosition(it.neuron2, it.ledIndex2.value).translate(translation)
             val center = PVector.lerp(led1Pos, led2Pos, 0.5f)
 
-            val fixture1 = LineFixture(led1Pos, center, thickness = 5)
-            val fixture2 = LineFixture(center, led2Pos, thickness = 5)
+            val fixture1 = IntensityLineFixture(led1Pos, center, thickness = 5)
+            val fixture2 = IntensityLineFixture(led2Pos, center, thickness = 5)
 
             mapper.fixtures.add(fixture1)
             mapper.fixtures.add(fixture2)

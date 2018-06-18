@@ -5,7 +5,11 @@ import processing.core.PApplet
 import processing.core.PImage
 import processing.core.PVector
 
-class LineFixture(val p1 : PVector, val p2 : PVector, val thickness : Int = 20) : Fixture() {
+class IntensityLineFixture(val p1 : PVector,
+                           val p2 : PVector,
+                           val thickness : Int = 20,
+                           val minIntensity : Float = 0.1f,
+                           val maxIntensity : Float = 1.0f) : Fixture() {
 
     val subFixtures = mutableListOf<RectangleFixture>()
 
@@ -43,21 +47,25 @@ class LineFixture(val p1 : PVector, val p2 : PVector, val thickness : Int = 20) 
             return
 
         var pixelCount = 0
+        var totalIntensity = 0f
 
-        subFixtures.forEach {
-            it.updateColor(image)
+        subFixtures.forEachIndexed { i, f ->
+            f.updateColor(image)
 
-            val pixel = it.color
+            val pixel = f.color
 
             if(pixel != ColorMode.color(0)) {
                 pixelCount++
 
-                h += ColorMode.hue(pixel)
-                s += ColorMode.saturation(pixel)
-                b += ColorMode.brightness(pixel)
+                val intensity = PApplet.map(i.toFloat(), 0f, subFixtures.size.toFloat(), maxIntensity, minIntensity)
+                totalIntensity += intensity
+
+                h += ColorMode.hue(pixel) * intensity
+                s += ColorMode.saturation(pixel) * intensity
+                b += ColorMode.brightness(pixel) * intensity
             }
         }
 
-        color = ColorMode.color(h / pixelCount, s / pixelCount, b / pixelCount)
+        color = ColorMode.color(h / totalIntensity, s / totalIntensity, b / totalIntensity)
     }
 }
