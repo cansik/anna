@@ -457,4 +457,21 @@ class PrimaryView {
             it.markerColor.value = ""
         }
     }
+
+    fun onLightMarkers(actionEvent: ActionEvent) {
+        project.value.network.weights.forEach {
+            when(it.markerColor.value) {
+                "White" -> it.markWeightWhite()
+                "Red" -> it.markWeightRed()
+                "Orange" -> it.markWeightOrange()
+                "Lime" -> it.markWeightLime()
+                "Green" -> it.markWeightGreen()
+                "Cyan" -> it.markWeightCyan()
+                "Blue" -> it.markWeightBlue()
+                "Purple" -> it.markWeightPurple()
+                "Magenta" -> it.markWeightMagenta()
+                "" -> it.blackoutWeight()
+            }
+        }
+    }
 }
