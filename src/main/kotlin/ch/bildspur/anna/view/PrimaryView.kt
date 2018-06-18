@@ -97,32 +97,6 @@ class PrimaryView {
     fun setupWeightTableView()
     {
         // setup columns
-        /*
-        val layer1Column = TableColumn<Weight, Int>("Layer 1")
-        layer1Column.cellFactory { it.layerIndex1.value }
-        weightTableView.columns.add(layer1Column)
-
-        val layer2Column = TableColumn<Weight, Int>("Layer 2")
-        layer2Column.cellFactory { it.layerIndex2.value }
-        weightTableView.columns.add(layer2Column)
-
-        val neuron1Column = TableColumn<Weight, Int>("Neuron 1")
-        neuron1Column.cellFactory { it.neuronIndex1.value }
-        weightTableView.columns.add(neuron1Column)
-
-        val neuron2Column = TableColumn<Weight, Int>("Neuron 2")
-        neuron2Column.cellFactory { it.neuronIndex2.value }
-        weightTableView.columns.add(neuron2Column)
-
-        val led1Column = TableColumn<Weight, Int>("LED 1")
-        led1Column.cellFactory { it.ledIndex1.value }
-        weightTableView.columns.add(led1Column)
-
-        val led2Column = TableColumn<Weight, Int>("LED 2")
-        led2Column.cellFactory { it.ledIndex2.value }
-        weightTableView.columns.add(led2Column)
-        */
-
         val fromColumn = TableColumn<Weight, String>("From Address")
         fromColumn.cellFactory { "${it.layerIndex1.value}.${it.neuronIndex1.value}.${it.ledIndex1.value}" }
         weightTableView.columns.add(fromColumn)
@@ -140,7 +114,7 @@ class PrimaryView {
         weightTableView.columns.add(led2AddressColumn)
 
         val pofConnectedColumn = TableColumn<Weight, String>("POF Connected")
-        pofConnectedColumn.cellFactory { it.isPofConnected.value.toString() }
+        pofConnectedColumn.cellFactory { if(it.isPofConnected.value) "x" else ""  }
         weightTableView.columns.add(pofConnectedColumn)
 
         val markerColorColumn = TableColumn<Weight, String>("Marker Color")
