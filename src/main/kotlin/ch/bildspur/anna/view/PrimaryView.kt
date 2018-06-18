@@ -165,9 +165,19 @@ class PrimaryView {
 
     fun updateTableView()
     {
+        var selectedIndex = -1
+
+        // save selection
+        if(weightTableView.selectionModel.selectedItem != null)
+            selectedIndex = weightTableView.selectionModel.selectedIndex
+
         // setup items
         weightModels.clear()
         weightModels.addAll(project.value.network.weights)
+
+        // reselect
+        if(selectedIndex >= 0)
+            weightTableView.selectionModel.select(selectedIndex)
     }
 
     fun setupSceneSwitching()
