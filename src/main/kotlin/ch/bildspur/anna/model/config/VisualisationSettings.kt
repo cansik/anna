@@ -3,6 +3,7 @@ package ch.bildspur.anna.model.config
 import ch.bildspur.anna.model.DataModel
 import ch.bildspur.anna.util.ColorMode
 import ch.bildspur.anna.view.properties.BooleanParameter
+import ch.bildspur.anna.view.properties.ColorParameter
 import ch.bildspur.anna.view.properties.FloatParameter
 import ch.bildspur.anna.view.properties.IntParameter
 import com.google.gson.annotations.Expose
@@ -51,7 +52,7 @@ class VisualisationSettings {
     var pofSpiral = DataModel(15f)
 
     // nodes
-    @IntParameter("Node Color")
+    @ColorParameter("Node Color")
     @Expose
     var nodeColor = DataModel(ColorMode.color(255))
 

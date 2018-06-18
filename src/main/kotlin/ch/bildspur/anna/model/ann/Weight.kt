@@ -171,4 +171,10 @@ class Weight(@Expose
     {
         return ("Weight (${layerIndex1.value}.${neuronIndex1.value}.${ledIndex1.value} - ${layerIndex2.value}.${neuronIndex2.value}.${ledIndex2.value})")
     }
+
+    val startAddress : String
+        get() = "${layerIndex1.value}.${neuronIndex1.value}.${ledIndex1.value}"
+
+    val endAddress : String
+        get() = "${layerIndex2.value}.${neuronIndex2.value}.${ledIndex2.value}"
 }

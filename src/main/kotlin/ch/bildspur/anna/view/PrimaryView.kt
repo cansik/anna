@@ -89,6 +89,8 @@ class PrimaryView {
                 // add astrix if project is not saved
                 if(!primaryStage.title.endsWith("*"))
                     primaryStage.title += "*"
+                else
+                    primaryStage.title = primaryStage.title.substring(0 until primaryStage.title.length - 1)
             }
 
             setupWeightTableView()
@@ -106,12 +108,12 @@ class PrimaryView {
     fun setupWeightTableView()
     {
         // setup columns
-        val fromColumn = TableColumn<Weight, String>("From Address")
-        fromColumn.cellFactory { "${it.layerIndex1.value}.${it.neuronIndex1.value}.${it.ledIndex1.value}" }
+        val fromColumn = TableColumn<Weight, String>("Start Address")
+        fromColumn.cellFactory { it.startAddress }
         weightTableView.columns.add(fromColumn)
 
-        val toColumn = TableColumn<Weight, String>("To Address")
-        toColumn.cellFactory { "${it.layerIndex2.value}.${it.neuronIndex2.value}.${it.ledIndex2.value}" }
+        val toColumn = TableColumn<Weight, String>("End Address")
+        toColumn.cellFactory { it.endAddress }
         weightTableView.columns.add(toColumn)
 
         val led1AddressColumn = TableColumn<Weight, String>("LED 1 DMX")
@@ -156,7 +158,7 @@ class PrimaryView {
 
         // setup items
         weightModels.clear()
-        weightModels.addAll(project.value.network.weights)
+        weightModels.addAll(project.value.network.weights.sortedBy { it.startAddress })
 
         // reselect
         if(selectedIndex >= 0)
