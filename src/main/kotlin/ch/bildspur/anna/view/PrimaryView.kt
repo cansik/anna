@@ -152,6 +152,11 @@ class PrimaryView {
     {
         var selectedIndex = -1
 
+        // todo: make this more elegant
+
+        // save property view
+        val currentPropertyObject = propertiesControl.currentObject
+
         // save selection
         if(weightTableView.selectionModel.selectedItem != null)
             selectedIndex = weightTableView.selectionModel.selectedIndex
@@ -163,6 +168,9 @@ class PrimaryView {
         // reselect
         if(selectedIndex >= 0)
             weightTableView.selectionModel.select(selectedIndex)
+
+        // add property again
+        propertiesControl.initView(currentPropertyObject)
     }
 
     fun setupSceneSwitching()

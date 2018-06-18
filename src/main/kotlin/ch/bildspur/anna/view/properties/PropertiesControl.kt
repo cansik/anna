@@ -13,6 +13,8 @@ class PropertiesControl : VBox() {
 
     val propertyChanged = Event<BaseProperty>()
 
+    var currentObject : Any = Any()
+
     init {
         spacing = 10.0
         alignment = Pos.TOP_CENTER
@@ -21,6 +23,9 @@ class PropertiesControl : VBox() {
 
     fun initView(obj: Any) {
         clearView()
+
+        // save obj
+        currentObject = obj
 
         val params = readParameters(obj)
 
