@@ -97,6 +97,7 @@ class PrimaryView {
     fun setupWeightTableView()
     {
         // setup columns
+        /*
         val layer1Column = TableColumn<Weight, Int>("Layer 1")
         layer1Column.cellFactory { it.layerIndex1.value }
         weightTableView.columns.add(layer1Column)
@@ -120,6 +121,15 @@ class PrimaryView {
         val led2Column = TableColumn<Weight, Int>("LED 2")
         led2Column.cellFactory { it.ledIndex2.value }
         weightTableView.columns.add(led2Column)
+        */
+
+        val fromColumn = TableColumn<Weight, String>("From Address")
+        fromColumn.cellFactory { "${it.layerIndex1.value}.${it.neuronIndex1.value}.${it.ledIndex1.value}" }
+        weightTableView.columns.add(fromColumn)
+
+        val toColumn = TableColumn<Weight, String>("To Address")
+        toColumn.cellFactory { "${it.layerIndex2.value}.${it.neuronIndex2.value}.${it.ledIndex2.value}" }
+        weightTableView.columns.add(toColumn)
 
         val led1AddressColumn = TableColumn<Weight, String>("LED 1 DMX")
         led1AddressColumn.cellFactory { it.led1.address.toString() }
@@ -133,14 +143,15 @@ class PrimaryView {
         pofConnectedColumn.cellFactory { it.isPofConnected.value.toString() }
         weightTableView.columns.add(pofConnectedColumn)
 
+        val markerColorColumn = TableColumn<Weight, String>("Marker Color")
+        markerColorColumn.cellFactory { it.markerColor.value }
+        weightTableView.columns.add(markerColorColumn)
 
         // set column
         weightTableView.columns.forEach { it.style = "-fx-alignment: CENTER;" }
 
-        // setup items
-        weightModels.clear()
-        weightModels.addAll(project.value.network.weights)
         weightTableView.items = weightModels
+        updateTableView()
 
         // setup select
         weightTableView.selectionModel.selectedItemProperty().addListener { o ->
@@ -150,6 +161,13 @@ class PrimaryView {
                 initSettingsView(item, "$item")
             }
         }
+    }
+
+    fun updateTableView()
+    {
+        // setup items
+        weightModels.clear()
+        weightModels.addAll(project.value.network.weights)
     }
 
     fun setupSceneSwitching()
@@ -198,8 +216,7 @@ class PrimaryView {
     }
 
     fun updateUI() {
-        weightModels.clear()
-        weightModels.addAll(project.value.network.weights)
+        updateTableView()
     }
 
     fun createTestProject() : Project

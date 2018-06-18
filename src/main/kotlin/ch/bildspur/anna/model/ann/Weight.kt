@@ -53,6 +53,10 @@ class Weight(@Expose
     @BooleanParameter("POF Connected")
     var isPofConnected = DataModel(false)
 
+    @Expose
+    @StringParameter("MarkerColor")
+    var markerColor = DataModel("")
+
     val neuron1: Neuron
         get() = network.layers[layerIndex1.value].neurons[neuronIndex1.value]
 
@@ -89,48 +93,63 @@ class Weight(@Expose
     val markWeightWhite = {
         led1.color.fade(ColorMode.color(0, 0, 100), fadeSpeed)
         led2.color.fade(ColorMode.color(0, 0, 100), fadeSpeed)
+
+        markerColor.value = "White"
     }
 
     @ActionParameter("Mark Weight", "Red")
     val markWeightRed = {
         led1.color.fade(ColorMode.color(0, 100, 100), fadeSpeed)
         led2.color.fade(ColorMode.color(0, 100, 100), fadeSpeed)
+
+        markerColor.value = "Red"
     }
 
     @ActionParameter("Mark Weight", "Green")
     val markWeightGreen = {
         led1.color.fade(ColorMode.color(120, 100, 100), fadeSpeed)
         led2.color.fade(ColorMode.color(120, 100, 100), fadeSpeed)
+
+        markerColor.value = "Green"
     }
 
     @ActionParameter("Mark Weight", "Blue")
     val markWeightBlue = {
         led1.color.fade(ColorMode.color(244, 100, 100), fadeSpeed)
         led2.color.fade(ColorMode.color(244, 100, 100), fadeSpeed)
+
+        markerColor.value = "Blue"
     }
 
     @ActionParameter("Mark Weight", "Magenta")
     val markWeightMagenta = {
         led1.color.fade(ColorMode.color(310, 100, 100), fadeSpeed)
         led2.color.fade(ColorMode.color(310, 100, 100), fadeSpeed)
+
+        markerColor.value = "Magenta"
     }
 
     @ActionParameter("Mark Weight", "Cyan")
     val markWeightCyan = {
         led1.color.fade(ColorMode.color(195, 100, 100), fadeSpeed)
         led2.color.fade(ColorMode.color(195, 100, 100), fadeSpeed)
+
+        markerColor.value = "Cyan"
     }
 
     @ActionParameter("Mark Weight", "Yellow")
     val markWeightYellow = {
         led1.color.fade(ColorMode.color(50, 100, 100), fadeSpeed)
         led2.color.fade(ColorMode.color(50, 100, 100), fadeSpeed)
+        markerColor.value = "Yellow"
     }
 
     @ActionParameter("Weight", "Blackout")
     val blackoutWeight = {
         led1.color.fade(ColorMode.color(0, 100, 0), fadeSpeed)
         led2.color.fade(ColorMode.color(0, 100, 0), fadeSpeed)
+
+        markerColor.value = ""
     }
 
     override fun toString() : String
