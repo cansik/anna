@@ -54,6 +54,8 @@ class PrimaryView {
 
     val projectChanged = DataModel(false)
 
+    var weightSelectionOn = false
+
     lateinit var appConfig: AppConfig
 
     val project = DataModel(Project())
@@ -142,7 +144,7 @@ class PrimaryView {
         weightTableView.selectionModel.selectedItemProperty().addListener { o ->
             val item = weightTableView.selectionModel.selectedItem
 
-            if(item != null) {
+            if(item != null && weightSelectionOn) {
                 initSettingsView(item, "$item")
             }
         }
@@ -151,11 +153,6 @@ class PrimaryView {
     fun updateTableView()
     {
         var selectedIndex = -1
-
-        // todo: make this more elegant
-
-        // save property view
-        val currentPropertyObject = propertiesControl.currentObject
 
         // save selection
         if(weightTableView.selectionModel.selectedItem != null)
@@ -166,11 +163,11 @@ class PrimaryView {
         weightModels.addAll(project.value.network.weights.sortedBy { it.startAddress })
 
         // reselect
-        if(selectedIndex >= 0)
+        if(selectedIndex >= 0) {
+            weightSelectionOn = false
             weightTableView.selectionModel.select(selectedIndex)
-
-        // add property again
-        propertiesControl.initView(currentPropertyObject)
+            weightSelectionOn = true
+        }
     }
 
     fun setupSceneSwitching()
