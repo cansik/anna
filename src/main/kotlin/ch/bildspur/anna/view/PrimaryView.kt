@@ -52,6 +52,8 @@ class PrimaryView {
 
     val configuration = ConfigurationController()
 
+    val projectChanged = DataModel(false)
+
     lateinit var appConfig: AppConfig
 
     val project = DataModel(Project())
@@ -80,6 +82,13 @@ class PrimaryView {
             // for updating the property view
             propertiesControl.propertyChanged += {
                 updateUI()
+                projectChanged.value = true
+            }
+
+            projectChanged.onChanged +=  {
+                // add astrix if project is not saved
+                if(!primaryStage.title.endsWith("*"))
+                    primaryStage.title += "*"
             }
 
             setupWeightTableView()
@@ -341,6 +350,7 @@ class PrimaryView {
                 configuration.saveProject(result.path, project.value)
                 appConfig.projectFile = result.path
                 configuration.saveAppConfig(appConfig)
+                projectChanged.value = false
             }, { updateUI() }, "save project")
         }
     }
@@ -350,6 +360,7 @@ class PrimaryView {
             UITask.run({
                 configuration.saveProject(appConfig.projectFile, project.value)
                 configuration.saveAppConfig(appConfig)
+                projectChanged.value = false
             }, { updateUI() }, "save project")
         }
     }
