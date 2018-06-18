@@ -39,7 +39,7 @@ class StarPatternScene(project : Project) : BaseScene(project) {
                 if (ledBrightness > 10) {
                     //led is ON
                     if (rnd.randomBoolean(sceneSettings.starsFadeOffSpeed.value)) {
-                        it.color.fadeB(0f, sceneSettings.starsFadeOnSpeed.value)
+                        it.color.fadeB(0f, sceneSettings.starsRandomOffFactor.value)
                     }
                 } else {
                     //led is OFF

@@ -9,7 +9,7 @@ import com.google.gson.annotations.Expose
 class SceneSettings {
 
     @Expose
-    @StringParameter("Active Scene")
+    @StringParameter("Active Scene", isEditable = false)
     var activeScene = DataModel("")
 
     @Expose
