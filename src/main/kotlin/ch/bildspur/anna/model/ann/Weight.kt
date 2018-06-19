@@ -69,6 +69,9 @@ class Weight(@Expose
     val led2: Led
         get() = neuron2.ledArray[ledIndex2.value]
 
+    val isInternalConnection : Boolean
+        get() = layerIndex1.value == layerIndex2.value && neuronIndex1.value == neuronIndex2.value
+
     fun isConnected(neuron : Neuron) : Boolean
     {
         return neuron1 == neuron || neuron2 == neuron

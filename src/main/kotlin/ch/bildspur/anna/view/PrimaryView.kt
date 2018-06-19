@@ -54,7 +54,7 @@ class PrimaryView {
 
     val projectChanged = DataModel(false)
 
-    var weightSelectionOn = false
+    var weightSelectionOn = true
 
     lateinit var appConfig: AppConfig
 
@@ -125,6 +125,10 @@ class PrimaryView {
         val led2AddressColumn = TableColumn<Weight, String>("LED 2 DMX")
         led2AddressColumn.cellFactory { it.led2.address.toString() }
         weightTableView.columns.add(led2AddressColumn)
+
+        val internalColumn = TableColumn<Weight, String>("Internal")
+        internalColumn.cellFactory { if(it.isInternalConnection) "x" else ""  }
+        weightTableView.columns.add(internalColumn)
 
         val pofConnectedColumn = TableColumn<Weight, String>("POF Connected")
         pofConnectedColumn.cellFactory { if(it.isPofConnected.value) "x" else ""  }
