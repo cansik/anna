@@ -2,10 +2,7 @@ package ch.bildspur.anna.scene
 
 import ch.bildspur.anna.Sketch
 import ch.bildspur.anna.controller.timer.TimerTask
-import ch.bildspur.anna.mapping.Fixture
-import ch.bildspur.anna.mapping.IntensityLineFixture
-import ch.bildspur.anna.mapping.LineFixture
-import ch.bildspur.anna.mapping.PixelMapper
+import ch.bildspur.anna.mapping.*
 import ch.bildspur.anna.model.Project
 import ch.bildspur.anna.model.light.Led
 import ch.bildspur.anna.renderer.VisualisationRenderer
@@ -16,6 +13,7 @@ import processing.core.PImage
 import processing.core.PVector
 import kotlin.concurrent.thread
 import kotlin.concurrent.withLock
+import kotlin.math.roundToInt
 
 class VideoInputScene(project : Project) : BaseScene(project) {
     private val task = TimerTask(40, { update() })
@@ -36,6 +34,8 @@ class VideoInputScene(project : Project) : BaseScene(project) {
     val ledToFixtureLookup : MutableMap<Led, Fixture> = mutableMapOf()
 
     val padding = PVector(120f, 80f)
+
+    val fixtureThickness = 5
 
     lateinit var buffer : PGraphics
 
@@ -74,14 +74,27 @@ class VideoInputScene(project : Project) : BaseScene(project) {
             val led2Pos = visualisation.getLEDPosition(it.neuron2, it.ledIndex2.value).translate(translation)
             val center = PVector.lerp(led1Pos, led2Pos, 0.5f)
 
-            val fixture1 = IntensityLineFixture(led1Pos, center, thickness = 5)
-            val fixture2 = IntensityLineFixture(led2Pos, center, thickness = 5)
 
-            mapper.fixtures.add(fixture1)
-            mapper.fixtures.add(fixture2)
+            if(it.isOnePixelConnection)
+            {
+                val hf = fixtureThickness / 2.0
+                val fixture = RectangleFixture((led1Pos.x + hf).roundToInt(), (led1Pos.y + hf).roundToInt(), fixtureThickness, fixtureThickness)
 
-            ledToFixtureLookup[it.led1] = fixture1
-            ledToFixtureLookup[it.led2] = fixture2
+                mapper.fixtures.add(fixture)
+
+                ledToFixtureLookup[it.led1] = fixture
+                ledToFixtureLookup[it.led2] = fixture
+            }
+            else {
+                val fixture1 = IntensityLineFixture(led1Pos, center, thickness = fixtureThickness)
+                val fixture2 = IntensityLineFixture(led2Pos, center, thickness = fixtureThickness)
+
+                mapper.fixtures.add(fixture1)
+                mapper.fixtures.add(fixture2)
+
+                ledToFixtureLookup[it.led1] = fixture1
+                ledToFixtureLookup[it.led2] = fixture2
+            }
         }
     }
 

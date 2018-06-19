@@ -70,7 +70,13 @@ class Weight(@Expose
         get() = neuron2.ledArray[ledIndex2.value]
 
     val isInternalConnection : Boolean
-        get() = layerIndex1.value == layerIndex2.value && neuronIndex1.value == neuronIndex2.value
+        get() = layerIndex1.value == layerIndex2.value
+                && neuronIndex1.value == neuronIndex2.value
+
+    val isOnePixelConnection : Boolean
+        get() = layerIndex1.value == layerIndex2.value
+                && neuronIndex1.value == neuronIndex2.value
+                && ledIndex1.value == ledIndex2.value
 
     fun isConnected(neuron : Neuron) : Boolean
     {

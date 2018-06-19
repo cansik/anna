@@ -11,11 +11,11 @@ class RectangleFixture(val x : Int, val y : Int, val width : Int, val height : I
         var s = 0f
         var b = 0f
 
-        val pixelCount = width * height
-
         // check if there are pixels to read
-        if(pixelCount <= 0)
+        if( width * height <= 0)
             return
+
+        var pixelCount = 0
 
         // read pixels
         (0 until width).forEach { ix ->
@@ -25,9 +25,14 @@ class RectangleFixture(val x : Int, val y : Int, val width : Int, val height : I
 
                 // read pixel
                 val pixel = image.readPixel(px, py)
-                h += ColorMode.hue(pixel)
-                s += ColorMode.saturation(pixel)
-                b += ColorMode.brightness(pixel)
+
+                if(pixel != ColorMode.color(0)) {
+                    pixelCount++
+
+                    h += ColorMode.hue(pixel)
+                    s += ColorMode.saturation(pixel)
+                    b += ColorMode.brightness(pixel)
+                }
             }
         }
 
